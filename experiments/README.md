@@ -25,7 +25,7 @@ python scripts/benchmark_reid_models.py \
   --output experiments/results/clip_market1501.json
 ```
 
-To test an additional representation on top of the current CLIP embedding:
+To test an additional representation on top of CLIP:
 
 ```bash
 python scripts/benchmark_reid_models.py \
@@ -39,6 +39,38 @@ python scripts/benchmark_reid_models.py \
 Fusion concatenates normalized embeddings with square-root weights, which is
 equivalent to a weighted average of their cosine similarities. The selected weight
 maximizes tracker-to-visible rank-1.
+
+Use `--primary` to test a different base representation:
+
+```bash
+python scripts/benchmark_reid_models.py \
+  --model fusion \
+  --primary osnet_ain \
+  --secondary transreid \
+  --device cuda:0 \
+  --output experiments/results/osnet_ain_plus_transreid.json
+```
+
+OpenGait fusion is sequence-level because gait requires multiple silhouettes:
+
+```bash
+python scripts/benchmark_reid_models.py \
+  --model fusion \
+  --primary transreid \
+  --secondary opengait \
+  --device cuda:0 \
+  --output experiments/results/transreid_plus_opengait.json
+```
+
+For an end-to-end BoT-SORT run with TransReID replacing CLIP:
+
+```bash
+python run_demo.py \
+  --video sample_data/test_clip.mp4 \
+  --metadata sample_data/test_metadata.json \
+  --output_dir outputs/clip_ARG_FRA_183303_v56_transreid_tracker \
+  --config configs/v56_transreid_tracker.yaml
+```
 
 External official repositories and public checkpoints are expected under
 `/mnt/data/reid_models` by default. The result files contain metrics and model

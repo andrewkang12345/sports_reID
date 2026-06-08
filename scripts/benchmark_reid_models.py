@@ -665,31 +665,116 @@ def evaluate_opengait(
     }
 
 
-def extract_fusion_secondary(
-    secondary: str,
+def extract_named_frame_model(
+    model_name: str,
     samples: list[dict[str, Any]],
     frames: dict[int, np.ndarray],
     device: str,
     batch_size: int,
     external_root: Path,
 ) -> np.ndarray:
-    if secondary == "transreid":
+    if model_name == "clip":
+        return extract_boxmot(
+            samples,
+            frames,
+            ROOT / "clip_market1501.pt",
+            device,
+        )
+    if model_name == "transreid":
         return extract_transreid(samples, device, batch_size, external_root)
-    if secondary == "solider":
+    if model_name == "solider":
         return extract_solider(samples, device, batch_size, external_root)
-    if secondary == "dinov2":
+    if model_name == "dinov2":
         return extract_dinov2(samples, device, batch_size)
-    if secondary == "osnet_ain":
+    if model_name == "osnet_ain":
         return extract_boxmot(
             samples,
             frames,
             ROOT / "osnet_ain_x1_0_msmt17.pt",
             device,
         )
-    raise ValueError(f"Unsupported fusion secondary: {secondary}")
+    raise ValueError(f"Unsupported frame model: {model_name}")
+
+
+def evaluate_temporal_pair(
+    primary: str,
+    fusion_weights: list[float],
+    samples: list[dict[str, Any]],
+    frames: dict[int, np.ndarray],
+    device: str,
+    batch_size: int,
+    external_root: Path,
+) -> tuple[dict[str, Any], int]:
+    primary_features = normalize_rows(
+        extract_named_frame_model(
+            primary, samples, frames, device, batch_size, external_root
+        )
+    )
+    appearance_query, appearance_gallery, appearance_labels = temporal_centroids(
+        primary_features, samples
+    )
+    gait_query, gait_gallery, gait_labels, segmentation = extract_opengait(
+        samples, frames, device, external_root
+    )
+    if appearance_labels != gait_labels:
+        raise RuntimeError("Appearance and OpenGait temporal identities do not align")
+
+    sweep: dict[str, Any] = {}
+    for gait_weight in fusion_weights:
+        if not 0.0 <= gait_weight <= 1.0:
+            raise ValueError("Fusion weights must be between zero and one")
+        query = normalize_rows(
+            np.concatenate(
+                [
+                    math.sqrt(1.0 - gait_weight) * appearance_query,
+                    math.sqrt(gait_weight) * gait_query,
+                ],
+                axis=1,
+            )
+        )
+        gallery = normalize_rows(
+            np.concatenate(
+                [
+                    math.sqrt(1.0 - gait_weight) * appearance_gallery,
+                    math.sqrt(gait_weight) * gait_gallery,
+                ],
+                axis=1,
+            )
+        )
+        similarities = query @ gallery.T
+        rank1 = 0
+        average_precisions = []
+        for index, identity in enumerate(appearance_labels):
+            order = np.argsort(-similarities[index])
+            matches = np.asarray(
+                [appearance_labels[item] == identity for item in order], dtype=float
+            )
+            rank1 += int(matches[0] == 1)
+            average_precisions.append(average_precision(matches))
+        sweep[f"{gait_weight:.2f}"] = {
+            "identities": len(appearance_labels),
+            "rank1_pct": 100.0 * rank1 / max(1, len(appearance_labels)),
+            "map_pct": 100.0 * float(np.mean(average_precisions)),
+        }
+    selected_weight, selected_metrics = max(
+        sweep.items(),
+        key=lambda item: (item[1]["rank1_pct"], item[1]["map_pct"]),
+    )
+    return (
+        {
+            "temporal_split_retrieval": selected_metrics,
+            "silhouette_extraction": segmentation,
+            "frame_level_metrics": None,
+            "selected_opengait_weight": float(selected_weight),
+            "selection_metric": "temporal_split_retrieval.rank1_pct_then_map_pct",
+            "fusion_sweep": sweep,
+        },
+        int(appearance_query.shape[1] + gait_query.shape[1]),
+    )
 
 
 def evaluate_fusion(
+    primary: str,
     secondary: str,
     fusion_weights: list[float],
     samples: list[dict[str, Any]],
@@ -698,11 +783,23 @@ def evaluate_fusion(
     batch_size: int,
     external_root: Path,
 ) -> tuple[dict[str, Any], int]:
-    clip_features = normalize_rows(
-        extract_boxmot(samples, frames, ROOT / "clip_market1501.pt", device)
+    if secondary == "opengait":
+        return evaluate_temporal_pair(
+            primary,
+            fusion_weights,
+            samples,
+            frames,
+            device,
+            batch_size,
+            external_root,
+        )
+    primary_features = normalize_rows(
+        extract_named_frame_model(
+            primary, samples, frames, device, batch_size, external_root
+        )
     )
     secondary_features = normalize_rows(
-        extract_fusion_secondary(
+        extract_named_frame_model(
             secondary, samples, frames, device, batch_size, external_root
         )
     )
@@ -712,7 +809,7 @@ def evaluate_fusion(
             raise ValueError("Fusion weights must be between zero and one")
         fused = np.concatenate(
             [
-                math.sqrt(1.0 - secondary_weight) * clip_features,
+                math.sqrt(1.0 - secondary_weight) * primary_features,
                 math.sqrt(secondary_weight) * secondary_features,
             ],
             axis=1,
@@ -729,17 +826,20 @@ def evaluate_fusion(
             "selection_metric": "tracker_to_visible_retrieval.rank1_pct",
             "fusion_sweep": sweep,
         },
-        int(clip_features.shape[1] + secondary_features.shape[1]),
+        int(primary_features.shape[1] + secondary_features.shape[1]),
     )
 
 
 def model_display_name(
-    model: str, weights: Path | None, secondary: str | None = None
+    model: str,
+    weights: Path | None,
+    primary: str | None = None,
+    secondary: str | None = None,
 ) -> str:
     if model == "boxmot":
         return weights.stem if weights else "boxmot"
     if model == "fusion":
-        return f"CLIP + {secondary}"
+        return f"{primary} + {secondary}"
     return {
         "hsv": "HSV histogram",
         "dinov2": "DINOv2-small",
@@ -766,8 +866,13 @@ def main() -> None:
     )
     parser.add_argument("--weights", type=Path)
     parser.add_argument(
+        "--primary",
+        choices=["clip", "transreid", "osnet_ain"],
+        default="clip",
+    )
+    parser.add_argument(
         "--secondary",
-        choices=["transreid", "solider", "dinov2", "osnet_ain"],
+        choices=["transreid", "solider", "dinov2", "osnet_ain", "opengait"],
     )
     parser.add_argument(
         "--fusion-weights",
@@ -791,6 +896,7 @@ def main() -> None:
         if args.secondary is None:
             parser.error("--secondary is required for --model fusion")
         metrics, feature_dimension = evaluate_fusion(
+            args.primary,
             args.secondary,
             args.fusion_weights,
             samples,
@@ -825,7 +931,10 @@ def main() -> None:
 
     result = {
         "model": args.model,
-        "display_name": model_display_name(args.model, args.weights, args.secondary),
+        "display_name": model_display_name(
+            args.model, args.weights, args.primary, args.secondary
+        ),
+        "primary": args.primary if args.model == "fusion" else None,
         "secondary": args.secondary,
         "weights": str(args.weights.resolve()) if args.weights else None,
         "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",

@@ -48,30 +48,54 @@ class MultiObjectTracker:
 
 
 class BoxmotBoTSORTTracker(MultiObjectTracker):
-    """boxmot's BoT-SORT with a real ReID embedding (OSNet by default, PRTReID-soccer if
-    configured). The ReID embedding is the key improvement vs Ultralytics' built-in BoT-SORT
-    (which reuses YOLO neck features and does not survive long occlusions). Real ReID means
-    a player who's occluded for ~2-3s and re-detected gets the SAME track ID, eliminating
-    the fragmentation that drives "label teleport" downstream.
-    """
+    """BoxMOT BoT-SORT with a configurable crop-level ReID encoder."""
 
-    def __init__(self, reid_weights: str, device: str = "cuda", **kwargs: Any) -> None:
+    def __init__(
+        self,
+        reid_weights: str,
+        device: str = "cuda",
+        reid_backend: str = "boxmot",
+        transreid_repo: str | None = None,
+        transreid_weights: str | None = None,
+        transreid_config: str | None = None,
+        transreid_batch_size: int = 32,
+        **kwargs: Any,
+    ) -> None:
         from boxmot import BoTSORT
         from pathlib import Path as _Path
 
-        # Strip our own knobs from kwargs before passing to BoTSORT.
         knob_keys = {
             "backend", "tracker_config", "max_age_frames", "min_iou",
             "max_center_distance", "iou_weight", "center_weight",
         }
         botsort_kwargs = {k: v for k, v in kwargs.items() if k not in knob_keys}
+        custom_reid = reid_backend.lower() == "transreid"
+        if reid_backend.lower() not in {"boxmot", "transreid"}:
+            raise ValueError(f"Unsupported BoxMOT ReID backend: {reid_backend}")
         self.tracker = BoTSORT(
             model_weights=_Path(reid_weights),
             device=device,
             fp16=False,
-            with_reid=True,
+            with_reid=not custom_reid,
             **botsort_kwargs,
         )
+        if custom_reid:
+            if not all((transreid_repo, transreid_weights, transreid_config)):
+                raise ValueError(
+                    "TransReID requires repo, weights, and config paths"
+                )
+            from soccer_identity.identity.transreid_backend import (
+                TransReIDBoxmotBackend,
+            )
+
+            self.tracker.model = TransReIDBoxmotBackend(
+                repo=str(transreid_repo),
+                weights=str(transreid_weights),
+                config=str(transreid_config),
+                device=device,
+                batch_size=transreid_batch_size,
+            )
+            self.tracker.with_reid = True
 
     def update(
         self,
@@ -263,6 +287,13 @@ def build_tracker(config: dict[str, Any]) -> MultiObjectTracker:
         return BoxmotBoTSORTTracker(
             reid_weights=reid_weights,
             device=device,
+            reid_backend=str(tracker_config.get("reid_backend", "boxmot")),
+            transreid_repo=tracker_config.get("transreid_repo"),
+            transreid_weights=tracker_config.get("transreid_weights"),
+            transreid_config=tracker_config.get("transreid_config"),
+            transreid_batch_size=int(
+                tracker_config.get("transreid_batch_size", 32)
+            ),
             track_high_thresh=float(tracker_config.get("track_high_thresh", 0.25)),
             track_low_thresh=float(tracker_config.get("track_low_thresh", 0.10)),
             new_track_thresh=float(tracker_config.get("new_track_thresh", 0.25)),

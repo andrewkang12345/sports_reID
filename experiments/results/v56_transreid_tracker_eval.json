@@ -1,0 +1,28 @@
+{
+  "run": "v56_transreid_tracker",
+  "baseline": "v54_sticky_stitch",
+  "protocol": "eval_tracking.py on groundTruth_AllTracking_ARG_FRA_183303",
+  "changed_component": "BoT-SORT tracker ReID encoder: CLIP Market1501 to TransReID ViT-B MSMT17",
+  "fixed_components": [
+    "YOLO11x-seg detector",
+    "PARSeq SoccerNet jersey OCR",
+    "OSNet x1.0 cross-track appearance memory",
+    "identity fusion thresholds",
+    "track stitching"
+  ],
+  "metrics": {
+    "annotations": 521,
+    "detection_recall_pct": 94.6,
+    "jersey_accuracy_pct": 72.2,
+    "identity_accuracy_pct": 89.3,
+    "id_switches": 38
+  },
+  "baseline_metrics": {
+    "annotations": 521,
+    "detection_recall_pct": 94.6,
+    "jersey_accuracy_pct": 72.2,
+    "identity_accuracy_pct": 88.1,
+    "id_switches": 39
+  },
+  "contains_video_data": false
+}

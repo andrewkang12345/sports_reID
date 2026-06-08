@@ -17,8 +17,8 @@ pip install torch torchvision
 pip install opencv-python numpy pyyaml scipy pillow imageio-ffmpeg ultralytics boxmot==10.0.83 gdown
 ```
 
-The repository does not store model binaries. Restore the exact checkpoint set used by
-the checked-in configs (about 1.7 GB) from the public upstream projects:
+The repository does not store model binaries. Restore the default checkpoint set
+(about 1.7 GB) from the public upstream projects:
 
 ```bash
 python scripts/download_checkpoints.py
@@ -36,6 +36,7 @@ SHA-256 digest of the development checkout. Use `--group yolo` or
 | `clip_market1501.pt`, `osnet_x0_25_msmt17.pt`, `osnet_x1_0_msmt17.pt`, `osnet_ain_x1_0_msmt17.pt` | [BoxMOT ReID model zoo](https://github.com/mikel-brostrom/boxmot) |
 | `models/parseq_soccernet.ckpt`, `models/mkoshkina_legibility_resnet34.pth` | [A General Framework for Jersey Number Recognition in Sports Video](https://github.com/mkoshkina/jersey-number-pipeline) |
 | `models/mixsort/MixFormer_soccernet_train.pth.tar` | [MixSort model zoo](https://github.com/MCG-NJU/MixSort) |
+| `/mnt/data/reid_models/checkpoints/transreid_msmt17_vit.pth` | [Official TransReID MSMT17 model](https://drive.google.com/file/d/1x6Na97ycxS0t2Dn_0iRKWe1U5ccIqASK/view); setup commands are in [`experiments/README.md`](experiments/README.md) |
 
 The upstream projects control the checkpoint licenses and usage terms. Review those
 terms before redistribution or commercial use.
@@ -158,6 +159,7 @@ The default broadcast demo now uses:
 - Player detector: Ultralytics YOLO11m-seg COCO `person` detections and masks on CUDA.
 - Ball detector: Ultralytics YOLO with an OpenCV fallback.
 - Tracker ReID: BoxMOT BoT-SORT with `clip_market1501.pt`, a CLIP-ReID embedding model used for appearance association.
+- Best measured tracker ReID: `v56_transreid_tracker.yaml` replaces CLIP with the official TransReID ViT-B MSMT17 embedding through `soccer_identity/identity/transreid_backend.py`.
 - Cross-track ReID: the `v54_sticky_stitch.yaml` stack additionally enables OSNet (`osnet_x1_0_msmt17.pt`) for appearance-memory clustering and fragment stitching. This path is disabled in `configs/default.yaml` because it must be evaluated per experiment.
 - Team/player gating: metadata kit colors, including shirt and shorts when available, plus sideline truncation checks to suppress referees, coaches, and staff where possible.
 - Auxiliary body identity feature: a local HSV histogram contributes to identity fusion, but it is separate from and does not replace the CLIP tracker ReID.
@@ -170,11 +172,13 @@ Low-confidence identities are displayed as `Low conf ID` in the visualization in
 
 The reproducible `groundTruth_AllTracking_ARG_FRA_183303` sweep covers CLIP,
 TransReID, SOLIDER, DINOv2, three OSNet variants, HSV, OpenGait, and weighted
-CLIP-plus-secondary combinations. See
+appearance-model combinations. See
 [`experiments/ARG_FRA_183303_RESULTS.md`](experiments/ARG_FRA_183303_RESULTS.md)
-for metrics, official checkpoint sources, unavailable-model notes, and the `v54`
-versus OSNet-AIN end-to-end A/B. The direct OSNet-AIN replacement did not beat
-`v54`, so `v54_sticky_stitch.yaml` remains the current full-stack configuration.
+for metrics, official checkpoint sources, unavailable-model notes, fusion results,
+and end-to-end A/B tests. Replacing CLIP inside BoT-SORT with TransReID increased
+identity accuracy from 88.1% to 89.3% and reduced ID switches from 39 to 38, making
+`v56_transreid_tracker.yaml` the current best measured full-stack configuration on
+this clip.
 
 ## Replacing Perception Modules
 

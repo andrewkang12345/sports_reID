@@ -1,0 +1,76 @@
+{
+  "model": "fusion",
+  "display_name": "clip + opengait",
+  "primary": "clip",
+  "secondary": "opengait",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 5376,
+  "runtime_seconds": 13.290088683002978,
+  "metrics": {
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    },
+    "silhouette_extraction": {
+      "segmentation_matches": 519,
+      "samples": 521,
+      "segmentation_match_pct": 99.61612284069098
+    },
+    "frame_level_metrics": null,
+    "selected_opengait_weight": 0.1,
+    "selection_metric": "temporal_split_retrieval.rank1_pct_then_map_pct",
+    "fusion_sweep": {
+      "0.10": {
+        "identities": 20,
+        "rank1_pct": 100.0,
+        "map_pct": 100.0
+      },
+      "0.20": {
+        "identities": 20,
+        "rank1_pct": 100.0,
+        "map_pct": 100.0
+      },
+      "0.30": {
+        "identities": 20,
+        "rank1_pct": 95.0,
+        "map_pct": 97.5
+      },
+      "0.40": {
+        "identities": 20,
+        "rank1_pct": 95.0,
+        "map_pct": 97.5
+      },
+      "0.50": {
+        "identities": 20,
+        "rank1_pct": 95.0,
+        "map_pct": 97.5
+      },
+      "0.60": {
+        "identities": 20,
+        "rank1_pct": 95.0,
+        "map_pct": 96.66666666666666
+      },
+      "0.70": {
+        "identities": 20,
+        "rank1_pct": 95.0,
+        "map_pct": 96.66666666666666
+      },
+      "0.80": {
+        "identities": 20,
+        "rank1_pct": 85.0,
+        "map_pct": 90.41666666666666
+      },
+      "0.90": {
+        "identities": 20,
+        "rank1_pct": 60.0,
+        "map_pct": 76.25
+      }
+    }
+  }
+}

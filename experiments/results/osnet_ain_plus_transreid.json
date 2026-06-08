@@ -1,0 +1,258 @@
+{
+  "model": "fusion",
+  "display_name": "osnet_ain + transreid",
+  "primary": "osnet_ain",
+  "secondary": "transreid",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 4352,
+  "runtime_seconds": 12.51024651699845,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 79.07869481765835,
+      "rank5_pct": 94.24184261036469,
+      "map_pct": 43.3355125714144
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 46.646341463414636,
+      "rank5_pct": 67.6829268292683,
+      "map_pct": 47.24590377275783
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 397,
+      "accuracy_pct": 81.35245901639344
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    },
+    "selected_secondary_weight": 0.4,
+    "selection_metric": "tracker_to_visible_retrieval.rank1_pct",
+    "fusion_sweep": {
+      "0.10": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 73.51247600767755,
+          "rank5_pct": 92.89827255278311,
+          "map_pct": 37.80152170376628
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 42.3780487804878,
+          "rank5_pct": 68.59756097560975,
+          "map_pct": 43.616561311197785
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 365,
+          "accuracy_pct": 74.79508196721312
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 95.0,
+          "map_pct": 97.5
+        }
+      },
+      "0.20": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 75.81573896353167,
+          "rank5_pct": 93.28214971209214,
+          "map_pct": 40.104519930027905
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 43.292682926829265,
+          "rank5_pct": 69.20731707317073,
+          "map_pct": 44.89338895861461
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 380,
+          "accuracy_pct": 77.8688524590164
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.30": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 77.15930902111324,
+          "rank5_pct": 94.24184261036469,
+          "map_pct": 41.89455002043867
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 45.1219512195122,
+          "rank5_pct": 67.98780487804878,
+          "map_pct": 46.25836020009322
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 387,
+          "accuracy_pct": 79.30327868852459
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.40": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 79.07869481765835,
+          "rank5_pct": 94.24184261036469,
+          "map_pct": 43.3355125714144
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 46.646341463414636,
+          "rank5_pct": 67.6829268292683,
+          "map_pct": 47.24590377275783
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 397,
+          "accuracy_pct": 81.35245901639344
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.50": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 79.27063339731286,
+          "rank5_pct": 94.62571976967371,
+          "map_pct": 44.292894833981116
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 46.03658536585366,
+          "rank5_pct": 67.07317073170732,
+          "map_pct": 47.515981173173365
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 399,
+          "accuracy_pct": 81.76229508196721
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.60": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 78.50287907869482,
+          "rank5_pct": 94.43378119001919,
+          "map_pct": 44.84428254811432
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 45.1219512195122,
+          "rank5_pct": 67.6829268292683,
+          "map_pct": 47.373409593631244
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 399,
+          "accuracy_pct": 81.76229508196721
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.70": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 78.88675623800384,
+          "rank5_pct": 93.85796545105566,
+          "map_pct": 45.12966666153297
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 44.51219512195122,
+          "rank5_pct": 67.07317073170732,
+          "map_pct": 47.39586277729045
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 400,
+          "accuracy_pct": 81.9672131147541
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.80": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 77.92706333973129,
+          "rank5_pct": 92.51439539347409,
+          "map_pct": 45.02762218569523
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 41.76829268292683,
+          "rank5_pct": 68.29268292682927,
+          "map_pct": 46.9875037007446
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 397,
+          "accuracy_pct": 81.35245901639344
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      },
+      "0.90": {
+        "all_crop_retrieval": {
+          "queries": 521,
+          "rank1_pct": 77.15930902111324,
+          "rank5_pct": 91.55470249520154,
+          "map_pct": 44.67088214257008
+        },
+        "tracker_to_visible_retrieval": {
+          "queries": 328,
+          "rank1_pct": 40.24390243902439,
+          "rank5_pct": 67.07317073170732,
+          "map_pct": 46.260951697821525
+        },
+        "adjacent_frame_assignment": {
+          "assignments": 488,
+          "correct": 393,
+          "accuracy_pct": 80.5327868852459
+        },
+        "temporal_split_retrieval": {
+          "identities": 20,
+          "rank1_pct": 100.0,
+          "map_pct": 100.0
+        }
+      }
+    }
+  }
+}

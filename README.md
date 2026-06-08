@@ -155,15 +155,16 @@ The main stages are:
 
 The default broadcast demo now uses:
 
-- Player detector: Ultralytics YOLO11n COCO `person` class on CUDA when available.
-- Ball detector: Ultralytics YOLO11n COCO `sports ball` class on CUDA, with OpenCV ball fallback.
-- Tracker: Ultralytics ByteTrack IDs exposed through the detector, with simple IoU fallback if detector IDs are absent.
+- Player detector: Ultralytics YOLO11m-seg COCO `person` detections and masks on CUDA.
+- Ball detector: Ultralytics YOLO with an OpenCV fallback.
+- Tracker ReID: BoxMOT BoT-SORT with `clip_market1501.pt`, a CLIP-ReID embedding model used for appearance association.
+- Cross-track ReID: the `v54_sticky_stitch.yaml` stack additionally enables OSNet (`osnet_x1_0_msmt17.pt`) for appearance-memory clustering and fragment stitching. This path is disabled in `configs/default.yaml` because it must be evaluated per experiment.
 - Team/player gating: metadata kit colors, including shirt and shorts when available, plus sideline truncation checks to suppress referees, coaches, and staff where possible.
-- Body appearance: local HSV histogram embedding, still a lightweight fallback rather than SoccerNet ReID.
-- Jersey number: conservative template OCR fallback; real SoccerNet jersey-number weights are not bundled.
-- Face/headshot: inactive unless real headshot paths are provided in metadata.
+- Auxiliary body identity feature: a local HSV histogram contributes to identity fusion, but it is separate from and does not replace the CLIP tracker ReID.
+- Jersey number: SoccerNet-fine-tuned PARSeq, with conservative template OCR as a fallback.
+- Face/headshot: enabled when roster metadata provides headshot paths.
 
-Low-confidence identities are displayed as `Low conf ID` in the visualization instead of implying a real player identity. Sapiens, SAM/SAM2, SoccerNet ReID, SoccerNet Jersey Number, and SportsMOT/MixSort are explicit adapter points, but they require their external repos/weights and are not silently used by the default demo.
+Low-confidence identities are displayed as `Low conf ID` in the visualization instead of implying a real player identity. The checkpoint downloader and source table above restore the public model files expected by these backends.
 
 ## Replacing Perception Modules
 
@@ -243,7 +244,7 @@ For a production training set, build rows from frozen tracklet evidence: team lo
 - The default OpenCV detector/tracker is only a runnable fallback. It is not a substitute for YOLO/RT-DETR plus ByteTrack/BoT-SORT on real broadcasts.
 - The template jersey OCR fallback only handles clear high-contrast digits and intentionally suppresses weak evidence.
 - Headshot matching uses a simple image embedding unless replaced with a face/head model.
-- Body ReID uses color/appearance histograms by default; replace it with SoccerNet ReID or a sports/person ReID model for real performance.
+- The identity-fusion `body_reid` feature is still an HSV histogram. Tracking itself uses CLIP-ReID, and the optional cross-track appearance-memory/stitching path uses OSNet; these three appearance signals should be evaluated separately.
 - Position priors are weak unless pitch calibration is available.
 - Image-space ball proximity is used when calibration is absent, so camera zoom and perspective can affect thresholds.
 

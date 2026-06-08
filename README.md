@@ -166,6 +166,16 @@ The default broadcast demo now uses:
 
 Low-confidence identities are displayed as `Low conf ID` in the visualization instead of implying a real player identity. The checkpoint downloader and source table above restore the public model files expected by these backends.
 
+## ReID Experiment Results
+
+The reproducible `groundTruth_AllTracking_ARG_FRA_183303` sweep covers CLIP,
+TransReID, SOLIDER, DINOv2, three OSNet variants, HSV, OpenGait, and weighted
+CLIP-plus-secondary combinations. See
+[`experiments/ARG_FRA_183303_RESULTS.md`](experiments/ARG_FRA_183303_RESULTS.md)
+for metrics, official checkpoint sources, unavailable-model notes, and the `v54`
+versus OSNet-AIN end-to-end A/B. The direct OSNet-AIN replacement did not beat
+`v54`, so `v54_sticky_stitch.yaml` remains the current full-stack configuration.
+
 ## Replacing Perception Modules
 
 Each module has a small interface:

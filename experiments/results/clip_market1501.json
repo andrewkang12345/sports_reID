@@ -1,0 +1,36 @@
+{
+  "model": "boxmot",
+  "display_name": "clip_market1501",
+  "weights": "/mnt/data/sports_reID/clip_market1501.pt",
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 1280,
+  "runtime_seconds": 10.203841749003914,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 74.28023032629558,
+      "rank5_pct": 94.24184261036469,
+      "map_pct": 42.355579215960134
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 48.47560975609756,
+      "rank5_pct": 72.2560975609756,
+      "map_pct": 46.274302207776486
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 397,
+      "accuracy_pct": 81.35245901639344
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    }
+  }
+}

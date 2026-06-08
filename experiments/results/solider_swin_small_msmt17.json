@@ -1,0 +1,36 @@
+{
+  "model": "solider",
+  "display_name": "SOLIDER Swin-S MSMT17",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 768,
+  "runtime_seconds": 6.3614323629954015,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 66.21880998080614,
+      "rank5_pct": 89.82725527831094,
+      "map_pct": 34.52982699513367
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 39.63414634146341,
+      "rank5_pct": 66.76829268292683,
+      "map_pct": 37.497282627623925
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 371,
+      "accuracy_pct": 76.02459016393442
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    }
+  }
+}

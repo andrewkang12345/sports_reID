@@ -1,0 +1,36 @@
+{
+  "model": "hsv",
+  "display_name": "HSV histogram",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 384,
+  "runtime_seconds": 0.36624992299766745,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 53.93474088291747,
+      "rank5_pct": 81.76583493282149,
+      "map_pct": 24.319761876297253
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 30.48780487804878,
+      "rank5_pct": 49.69512195121951,
+      "map_pct": 28.856534306463764
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 291,
+      "accuracy_pct": 59.631147540983605
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    }
+  }
+}

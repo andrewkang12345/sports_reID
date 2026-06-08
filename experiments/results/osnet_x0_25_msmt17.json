@@ -1,0 +1,36 @@
+{
+  "model": "boxmot",
+  "display_name": "osnet_x0_25_msmt17",
+  "weights": "/mnt/data/sports_reID/osnet_x0_25_msmt17.pt",
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 512,
+  "runtime_seconds": 7.622848753002472,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 56.62188099808061,
+      "rank5_pct": 85.22072936660268,
+      "map_pct": 27.81979817211042
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 26.524390243902438,
+      "rank5_pct": 58.53658536585366,
+      "map_pct": 29.65314023569355
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 318,
+      "accuracy_pct": 65.1639344262295
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 95.0,
+      "map_pct": 97.5
+    }
+  }
+}

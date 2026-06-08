@@ -1,0 +1,36 @@
+{
+  "model": "dinov2",
+  "display_name": "DINOv2-small",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 384,
+  "runtime_seconds": 9.101087790993915,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 39.53934740882917,
+      "rank5_pct": 75.43186180422265,
+      "map_pct": 17.722885678250698
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 20.426829268292682,
+      "rank5_pct": 52.4390243902439,
+      "map_pct": 19.328267874395706
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 207,
+      "accuracy_pct": 42.41803278688525
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 90.0,
+      "map_pct": 92.08333333333334
+    }
+  }
+}

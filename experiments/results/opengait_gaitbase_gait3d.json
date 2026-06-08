@@ -1,0 +1,25 @@
+{
+  "model": "opengait",
+  "display_name": "OpenGait GaitBase Gait3D",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": null,
+  "runtime_seconds": 7.4532065669991425,
+  "metrics": {
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 30.0,
+      "map_pct": 54.89880952380952
+    },
+    "silhouette_extraction": {
+      "segmentation_matches": 519,
+      "samples": 521,
+      "segmentation_match_pct": 99.61612284069098
+    },
+    "frame_level_metrics": null
+  }
+}

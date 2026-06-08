@@ -1,0 +1,36 @@
+{
+  "model": "transreid",
+  "display_name": "TransReID ViT-B MSMT17",
+  "weights": null,
+  "protocol": "groundTruth_AllTracking_ARG_FRA_183303 annotated crops",
+  "sample_count": 521,
+  "identity_count": 21,
+  "visible_crop_count": 115,
+  "tracker_only_crop_count": 406,
+  "feature_dimension": 3840,
+  "runtime_seconds": 6.548480054996617,
+  "metrics": {
+    "all_crop_retrieval": {
+      "queries": 521,
+      "rank1_pct": 75.62380038387715,
+      "rank5_pct": 91.17082533589252,
+      "map_pct": 44.054235534662766
+    },
+    "tracker_to_visible_retrieval": {
+      "queries": 328,
+      "rank1_pct": 39.329268292682926,
+      "rank5_pct": 66.46341463414635,
+      "map_pct": 45.485864013931746
+    },
+    "adjacent_frame_assignment": {
+      "assignments": 488,
+      "correct": 394,
+      "accuracy_pct": 80.73770491803279
+    },
+    "temporal_split_retrieval": {
+      "identities": 20,
+      "rank1_pct": 100.0,
+      "map_pct": 100.0
+    }
+  }
+}

@@ -1,0 +1,81 @@
+video:
+  max_seconds: 10.0
+
+detector:
+  backend: ultralytics
+  weights: weights/yolov8x_player.pt
+  confidence_threshold: 0.25
+  device: cuda
+
+ball_detector:
+  backend: opencv
+  opencv:
+    ball_min_area: 6
+    ball_max_area: 700
+    ball_min_circularity: 0.25
+
+tracker:
+  backend: sportsmot_mixsort
+  max_age_frames: 30
+  min_iou: 0.02
+  max_center_distance: 180.0
+  sportsmot:
+    repo_path: external/SportsMOT
+    weights_path: weights/sportsmot_mixsort.pt
+    device: cuda
+    fallback_to_simple: false
+
+tracking:
+  min_tracklet_observations: 4
+
+team_classifier:
+  temperature: 0.12
+  unfit_confidence_cap: 0.62
+
+jersey_ocr:
+  backend: template
+  run_every_n_frames: 2
+  min_score: 0.18
+  min_margin: 0.05
+  score_temperature: 0.06
+
+headshot_matcher:
+  enabled: true
+
+body_reid:
+  enabled: true
+
+position_prior:
+  enabled: true
+  default_prior: 0.5
+  strength: 0.12
+
+fusion:
+  temperature: 0.75
+  jersey_missing_neutral: 0.72
+  team_missing_neutral: 0.5
+  weights:
+    team: 2.0
+    jersey: 3.8
+    headshot: 1.2
+    body: 1.0
+    position: 0.25
+    track: 0.3
+
+assignment:
+  identity_confidence_threshold: 0.4
+  window_sec: 1.0
+  step_sec: 0.5
+
+proximity:
+  ball_distance_threshold_pixels: 120
+  ball_distance_threshold_meters: 3.0
+  min_near_ball_duration_sec: 0.5
+  identity_confidence_threshold: 0.4
+  max_gap_sec: 0.25
+
+visualization:
+  likely_threshold: 0.25
+  max_seconds: 10.0
+  browser_compatible_mp4: true
+  h264_crf: 22

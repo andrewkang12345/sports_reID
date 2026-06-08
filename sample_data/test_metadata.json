@@ -1,0 +1,363 @@
+{
+  "home_team": "Argentina",
+  "away_team": "France",
+  "identity_labels_available": true,
+  "visible_jersey_numbers": {
+    "Argentina": [
+      9,
+      7,
+      10,
+      19,
+      20,
+      24,
+      26
+    ],
+    "France": [
+      4,
+      7,
+      9,
+      10,
+      14,
+      18,
+      22
+    ]
+  },
+  "team_colors": {
+    "Argentina": {
+      "shirt": "#75aadb",
+      "shorts": "#ffffff"
+    },
+    "France": {
+      "shirt": "#1b2f5f",
+      "shorts": "#1b2f5f"
+    }
+  },
+  "public_source": {
+    "dataset": "FIFA Skeletal Tracking Light 2026",
+    "dataset_url": "https://huggingface.co/datasets/tijiang13/FIFA-Skeletal-Tracking-Light-2026/tree/main",
+    "source_clip": "/mnt/data/mywork/fifaInnovationChallenge/starter_kit/data/videos/ARG_FRA_183303.mp4",
+    "source_sequence": "ARG_FRA_183303",
+    "start_sec": 0.0,
+    "duration_sec": 30.0,
+    "license_note": "Dataset page lists license cc-by-2.0 and gated non-commercial access terms.",
+    "roster_source": "ground_truth_user_provided"
+  },
+  "rosters": {
+    "Argentina": [
+      {
+        "player_name": "Franco Armani",
+        "team_name": "Argentina",
+        "jersey_number": 1,
+        "position": "GK"
+      },
+      {
+        "player_name": "Lisandro Mart\u00ednez",
+        "team_name": "Argentina",
+        "jersey_number": 2,
+        "position": "DF"
+      },
+      {
+        "player_name": "Nicol\u00e1s Tagliafico",
+        "team_name": "Argentina",
+        "jersey_number": 3,
+        "position": "DF"
+      },
+      {
+        "player_name": "Gonzalo Montiel",
+        "team_name": "Argentina",
+        "jersey_number": 4,
+        "position": "DF"
+      },
+      {
+        "player_name": "Leandro Paredes",
+        "team_name": "Argentina",
+        "jersey_number": 5,
+        "position": "MF"
+      },
+      {
+        "player_name": "Germ\u00e1n Pezzella",
+        "team_name": "Argentina",
+        "jersey_number": 6,
+        "position": "DF"
+      },
+      {
+        "player_name": "Rodrigo De Paul",
+        "team_name": "Argentina",
+        "jersey_number": 7,
+        "position": "MF"
+      },
+      {
+        "player_name": "Marcos Acu\u00f1a",
+        "team_name": "Argentina",
+        "jersey_number": 8,
+        "position": "DF"
+      },
+      {
+        "player_name": "Juli\u00e1n \u00c1lvarez",
+        "team_name": "Argentina",
+        "jersey_number": 9,
+        "position": "FW"
+      },
+      {
+        "player_name": "Lionel Messi",
+        "team_name": "Argentina",
+        "jersey_number": 10,
+        "position": "FW"
+      },
+      {
+        "player_name": "\u00c1ngel Di Mar\u00eda",
+        "team_name": "Argentina",
+        "jersey_number": 11,
+        "position": "FW"
+      },
+      {
+        "player_name": "Ger\u00f3nimo Rulli",
+        "team_name": "Argentina",
+        "jersey_number": 12,
+        "position": "GK"
+      },
+      {
+        "player_name": "Cristian Romero",
+        "team_name": "Argentina",
+        "jersey_number": 13,
+        "position": "DF"
+      },
+      {
+        "player_name": "Exequiel Palacios",
+        "team_name": "Argentina",
+        "jersey_number": 14,
+        "position": "MF"
+      },
+      {
+        "player_name": "\u00c1ngel Correa",
+        "team_name": "Argentina",
+        "jersey_number": 15,
+        "position": "FW"
+      },
+      {
+        "player_name": "Thiago Almada",
+        "team_name": "Argentina",
+        "jersey_number": 16,
+        "position": "MF"
+      },
+      {
+        "player_name": "Alejandro G\u00f3mez",
+        "team_name": "Argentina",
+        "jersey_number": 17,
+        "position": "FW"
+      },
+      {
+        "player_name": "Guido Rodr\u00edguez",
+        "team_name": "Argentina",
+        "jersey_number": 18,
+        "position": "MF"
+      },
+      {
+        "player_name": "Nicol\u00e1s Otamendi",
+        "team_name": "Argentina",
+        "jersey_number": 19,
+        "position": "DF"
+      },
+      {
+        "player_name": "Alexis Mac Allister",
+        "team_name": "Argentina",
+        "jersey_number": 20,
+        "position": "MF"
+      },
+      {
+        "player_name": "Paulo Dybala",
+        "team_name": "Argentina",
+        "jersey_number": 21,
+        "position": "FW"
+      },
+      {
+        "player_name": "Lautaro Mart\u00ednez",
+        "team_name": "Argentina",
+        "jersey_number": 22,
+        "position": "FW"
+      },
+      {
+        "player_name": "Emiliano Mart\u00ednez",
+        "team_name": "Argentina",
+        "jersey_number": 23,
+        "position": "GK"
+      },
+      {
+        "player_name": "Enzo Fern\u00e1ndez",
+        "team_name": "Argentina",
+        "jersey_number": 24,
+        "position": "MF"
+      },
+      {
+        "player_name": "Juan Foyth",
+        "team_name": "Argentina",
+        "jersey_number": 25,
+        "position": "DF"
+      },
+      {
+        "player_name": "Nahuel Molina",
+        "team_name": "Argentina",
+        "jersey_number": 26,
+        "position": "DF"
+      }
+    ],
+    "France": [
+      {
+        "player_name": "Hugo Lloris",
+        "team_name": "France",
+        "jersey_number": 1,
+        "position": "GK"
+      },
+      {
+        "player_name": "Benjamin Pavard",
+        "team_name": "France",
+        "jersey_number": 2,
+        "position": "DF"
+      },
+      {
+        "player_name": "Axel Disasi",
+        "team_name": "France",
+        "jersey_number": 3,
+        "position": "DF"
+      },
+      {
+        "player_name": "Rapha\u00ebl Varane",
+        "team_name": "France",
+        "jersey_number": 4,
+        "position": "DF"
+      },
+      {
+        "player_name": "Jules Kound\u00e9",
+        "team_name": "France",
+        "jersey_number": 5,
+        "position": "DF"
+      },
+      {
+        "player_name": "Eduardo Camavinga",
+        "team_name": "France",
+        "jersey_number": 6,
+        "position": "MF"
+      },
+      {
+        "player_name": "Antoine Griezmann",
+        "team_name": "France",
+        "jersey_number": 7,
+        "position": "MF"
+      },
+      {
+        "player_name": "Aur\u00e9lien Tchouam\u00e9ni",
+        "team_name": "France",
+        "jersey_number": 8,
+        "position": "MF"
+      },
+      {
+        "player_name": "Olivier Giroud",
+        "team_name": "France",
+        "jersey_number": 9,
+        "position": "FW"
+      },
+      {
+        "player_name": "Kylian Mbapp\u00e9",
+        "team_name": "France",
+        "jersey_number": 10,
+        "position": "FW"
+      },
+      {
+        "player_name": "Ousmane Demb\u00e9l\u00e9",
+        "team_name": "France",
+        "jersey_number": 11,
+        "position": "FW"
+      },
+      {
+        "player_name": "Randal Kolo Muani",
+        "team_name": "France",
+        "jersey_number": 12,
+        "position": "FW"
+      },
+      {
+        "player_name": "Youssouf Fofana",
+        "team_name": "France",
+        "jersey_number": 13,
+        "position": "MF"
+      },
+      {
+        "player_name": "Adrien Rabiot",
+        "team_name": "France",
+        "jersey_number": 14,
+        "position": "MF"
+      },
+      {
+        "player_name": "Jordan Veretout",
+        "team_name": "France",
+        "jersey_number": 15,
+        "position": "MF"
+      },
+      {
+        "player_name": "Steve Mandanda",
+        "team_name": "France",
+        "jersey_number": 16,
+        "position": "GK"
+      },
+      {
+        "player_name": "William Saliba",
+        "team_name": "France",
+        "jersey_number": 17,
+        "position": "DF"
+      },
+      {
+        "player_name": "Dayot Upamecano",
+        "team_name": "France",
+        "jersey_number": 18,
+        "position": "DF"
+      },
+      {
+        "player_name": "Karim Benzema",
+        "team_name": "France",
+        "jersey_number": 19,
+        "position": "FW"
+      },
+      {
+        "player_name": "Kingsley Coman",
+        "team_name": "France",
+        "jersey_number": 20,
+        "position": "FW"
+      },
+      {
+        "player_name": "Lucas Hern\u00e1ndez",
+        "team_name": "France",
+        "jersey_number": 21,
+        "position": "DF"
+      },
+      {
+        "player_name": "Th\u00e9o Hern\u00e1ndez",
+        "team_name": "France",
+        "jersey_number": 22,
+        "position": "DF"
+      },
+      {
+        "player_name": "Marcus Thuram",
+        "team_name": "France",
+        "jersey_number": 23,
+        "position": "FW"
+      },
+      {
+        "player_name": "Ibrahima Konat\u00e9",
+        "team_name": "France",
+        "jersey_number": 24,
+        "position": "DF"
+      },
+      {
+        "player_name": "Eduardo Camavinga",
+        "team_name": "France",
+        "jersey_number": 25,
+        "position": "MF"
+      },
+      {
+        "player_name": "Matteo Guendouzi",
+        "team_name": "France",
+        "jersey_number": 26,
+        "position": "MF"
+      }
+    ]
+  }
+}

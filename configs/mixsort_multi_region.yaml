@@ -1,0 +1,135 @@
+# MixSort variant of default.yaml — only the tracker backend differs.
+# Use with: python3 run_demo.py --config configs/mixsort.yaml ...
+video:
+  max_seconds: 30.0
+
+detector:
+  backend: ultralytics
+  confidence_threshold: 0.15
+  weights: yolo11m-seg.pt
+  device: cuda
+  image_size: 960
+  use_tracking: false
+
+pose:
+  enabled: true
+  weights: yolo11m-pose.pt
+  device: cuda
+  crop_height: 320
+  conf: 0.05
+
+legibility:
+  enabled: false
+  weights: models/mkoshkina_legibility_resnet34.pth
+  threshold: 0.10
+  gpu: true
+  input_size: 224
+
+super_resolution:
+  enabled: true
+  weights: null
+  opencv:
+    player_min_area: 220
+    player_max_area_ratio: 0.08
+    player_min_height: 22
+    player_min_aspect: 0.18
+    player_max_aspect: 1.20
+    confidence_floor: 0.35
+
+tracker:
+  backend: mixsort_mixformer
+  mixformer_weights: models/mixsort/MixFormer_soccernet_train.pth.tar
+  device: cuda:0
+  track_thresh: 0.25    # broadcast soccer with ~20 players needs permissive threshold; upstream 0.5 misses too many
+  track_buffer: 90
+  match_thresh: 0.8
+  alpha: 0.6            # fuse IoU vs MixFormer similarity
+  radius: 0
+  iou_thresh: 0.3
+  script: mixformer_deit
+  mixformer_config: soccernet
+  frame_rate: 30
+
+tracking:
+  min_tracklet_observations: 2
+
+team_classifier:
+  temperature: 0.13
+  unfit_confidence_cap: 0.62
+  unknown_color_distance: 0.48
+
+role_filter:
+  min_player_likelihood: 0.35
+  min_track_duration_sec: 0.20
+  edge_margin_pixels: 4
+  max_edge_touch_ratio: 0.30
+  lower_sideline_y_ratio: 0.965
+  upper_sideline_y_ratio: 0.04
+  side_sideline_x_ratio: 0.015
+  sideline_penalty: 0.15
+
+jersey_ocr:
+  backend: parseq_soccernet
+  gpu: true
+  weights: models/parseq_soccernet.ckpt
+  run_every_n_frames: 1
+  min_confidence: 0.40
+  min_height_px: 18
+  min_width_px: 14
+  upscale_height: 96
+  fuzzy_substring_weight: 0.7
+  peak_lock_threshold: 0.80
+  peak_lock_min_count: 2
+  strict_roster: true
+  kit_isolate: true
+  multi_region: true   # disabled for tracker A/B test (saves ~3x OCR cost); revisit after picking tracker
+  confusable_smooth_strength: 0.0   # per-frame smoothing dilutes peak-lock threshold; apply post-aggregation if at all
+
+headshot_matcher:
+  enabled: true
+
+body_reid:
+  enabled: true
+
+appearance_memory:
+  enabled: true
+  reid_weights: osnet_x1_0_msmt17.pt
+  frame_stride: 3
+  anchor_score_threshold: 0.70
+  k_anchors_per_jersey: 3
+  cluster_cosine_threshold: 0.80
+  min_override_margin: 0.15
+
+position_prior:
+  enabled: true
+  default_prior: 0.5
+  strength: 0.12
+
+fusion:
+  temperature: 0.8
+  jersey_missing_neutral: 0.72
+  team_missing_neutral: 0.5
+  weights:
+    team: 2.0
+    jersey: 3.4
+    headshot: 1.0
+    body: 0.6
+    position: 0.25
+    track: 0.20
+
+assignment:
+  identity_confidence_threshold: 0.4
+  window_sec: 1.0
+  step_sec: 0.5
+
+visualization:
+  likely_threshold: 0.25
+  max_seconds: 30.0
+  browser_compatible_mp4: true
+  h264_crf: 22
+  min_player_likelihood: 0.35
+  min_track_duration_sec: 0.25
+  min_jersey_display_confidence: 0.40
+  peak_lock_threshold: 0.85
+  peak_lock_min_count: 4
+  longer_lock_min_count: 2

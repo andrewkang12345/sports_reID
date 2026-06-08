@@ -1,0 +1,47 @@
+# Licensed or user-supplied video
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.m4v
+*.ts
+*.mts
+*.m2ts
+
+# Publicly downloadable model checkpoints
+*.pt
+*.pth
+*.pth.tar
+*.ckpt
+*.onnx
+*.engine
+*.safetensors
+
+# Generated runs and local datasets
+outputs/
+models/outputs/
+*.zip
+
+# Python and tooling caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,82 @@
+video:
+  max_seconds: 10.0
+detector:
+  backend: ultralytics
+  confidence_threshold: 0.2
+  weights: yolo11n.pt
+  device: cuda
+  image_size: 960
+  use_tracking: true
+  tracker_config: botsort.yaml
+  opencv:
+    player_min_area: 220
+    player_max_area_ratio: 0.08
+    player_min_height: 22
+    player_min_aspect: 0.18
+    player_max_aspect: 1.2
+    confidence_floor: 0.35
+tracker:
+  backend: detector_ids
+  max_age_frames: 14
+  min_iou: 0.03
+  max_center_distance: 130.0
+  iou_weight: 0.65
+  center_weight: 0.35
+tracking:
+  min_tracklet_observations: 2
+team_classifier:
+  temperature: 0.13
+  unfit_confidence_cap: 0.62
+  unknown_color_distance: 0.48
+role_filter:
+  min_player_likelihood: 0.5
+  min_track_duration_sec: 0.2
+  edge_margin_pixels: 4
+  max_edge_touch_ratio: 0.3
+  lower_sideline_y_ratio: 0.965
+  upper_sideline_y_ratio: 0.04
+  side_sideline_x_ratio: 0.015
+  sideline_penalty: 0.15
+jersey_ocr:
+  backend: parseq_soccernet
+  gpu: true
+  weights: models/parseq_soccernet.ckpt
+  run_every_n_frames: 3
+  min_confidence: 0.4
+  min_height_px: 18
+  min_width_px: 14
+  fuzzy_substring_weight: 0.7
+  min_score: 0.16
+  min_margin: 0.035
+  score_temperature: 0.08
+headshot_matcher:
+  enabled: true
+body_reid:
+  enabled: true
+position_prior:
+  enabled: true
+  default_prior: 0.5
+  strength: 0.12
+fusion:
+  temperature: 0.8
+  jersey_missing_neutral: 0.72
+  team_missing_neutral: 0.5
+  weights:
+    team: 2.0
+    jersey: 3.4
+    headshot: 1.0
+    body: 0.6
+    position: 0.25
+    track: 0.2
+assignment:
+  identity_confidence_threshold: 0.4
+  window_sec: 1.0
+  step_sec: 0.5
+visualization:
+  likely_threshold: 0.25
+  max_seconds: 10.0
+  browser_compatible_mp4: true
+  h264_crf: 22
+  min_player_likelihood: 0.5
+  min_track_duration_sec: 0.25
+  min_jersey_display_confidence: 0.55

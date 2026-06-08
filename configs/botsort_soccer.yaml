@@ -1,0 +1,16 @@
+# BoT-SORT tuned for broadcast soccer (passed to Ultralytics .track via tracker_config).
+# Larger track_buffer keeps occluded tracks alive longer (~3s at 30fps).
+# with_reid: True with model: auto uses YOLO's native feature maps as ReID embeddings,
+# so identity survives across short occlusions without an external ReID model.
+tracker_type: botsort
+track_high_thresh: 0.25
+track_low_thresh: 0.10
+new_track_thresh: 0.25
+track_buffer: 90
+match_thresh: 0.75
+fuse_score: True
+gmc_method: sparseOptFlow
+proximity_thresh: 0.5
+appearance_thresh: 0.75
+with_reid: True
+model: auto

@@ -57,11 +57,13 @@ current short, non-periodic soccer sequences.
 
 ## End-to-end A/B
 
-`v55_osnet_ain_sticky_stitch.yaml` changes only the cross-track memory checkpoint
+`old_experiments/configs/v55_osnet_ain_sticky_stitch.yaml` changes only the
+cross-track memory checkpoint
 from OSNet x1.0 to OSNet-AIN x1.0. Detection, CLIP BoT-SORT association, OCR,
 thresholds, and stitching remain fixed.
 
-`v56_transreid_tracker.yaml` instead starts from `v54` and changes only BoT-SORT's
+The current `configs/best_stack.yaml` instead starts from archived `v54` and changes
+only BoT-SORT's
 crop-level association encoder from CLIP Market1501 to the official TransReID ViT-B
 MSMT17 checkpoint. Cross-track appearance memory remains OSNet x1.0.
 
@@ -88,4 +90,4 @@ tracker embedding model.
   `resnet50_fc512`, trained from scratch. The OSNet variants above are strong
   general-purpose baselines, not SoccerNet-trained models.
 
-Raw metrics and fusion sweeps are in `experiments/results/`.
+Raw metrics and fusion sweeps are in `old_experiments/reid_benchmarks/results/`.

@@ -1,8 +1,10 @@
 """Evaluate jersey-number OCR accuracy against the user's per-frame COCO ground truth.
 
-Uses the 31 labeled frames in groundTruth_ARG_FRA_183303/ to isolate OCR performance from
-detection/tracking. For each annotation with a known jersey number, crop the GT bbox from
-the source image, feed through a configurable OCR stack, and compare against the GT label.
+Uses the 31 labeled frames in
+old_experiments/data/groundTruth_ARG_FRA_183303/ to isolate OCR performance from
+detection/tracking. For each annotation with a known jersey number, crop the GT bbox
+from the source image, feed through a configurable OCR stack, and compare against the
+GT label.
 
 Usage:
     python3 eval_ocr_stack.py
@@ -22,7 +24,7 @@ import numpy as np
 from soccer_identity.identity.jersey_ocr import build_jersey_ocr, build_legibility_classifier
 from soccer_identity.utils.schemas import load_yaml_config
 
-GT_DIR = Path("groundTruth_ARG_FRA_183303")
+GT_DIR = Path("old_experiments/data/groundTruth_ARG_FRA_183303")
 GT_JSON = GT_DIR / "_annotations.coco.json"
 
 

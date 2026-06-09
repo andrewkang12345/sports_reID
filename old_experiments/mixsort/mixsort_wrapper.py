@@ -9,8 +9,8 @@ template-matching head for appearance association. On SportsMOT it edges out Byt
 30-second broadcast clip is what we're measuring here.
 
 Setup:
-  third_party/MixViT/      — the MixViT package (Python source)
-  third_party/mixsort/     — the mixsort_tracker / mixsort_oc_tracker modules
+  old_experiments/mixsort/third_party/MixViT/
+  old_experiments/mixsort/third_party/mixsort/
   models/mixsort/MixFormer_soccernet_train.pth.tar — trained MixFormer weights
 """
 from __future__ import annotations
@@ -62,8 +62,12 @@ class MixSortTracker(MultiObjectTracker):
         mot20: bool = False,
         project_root: str | None = None,
     ) -> None:
-        root = Path(project_root) if project_root else Path(__file__).resolve().parents[2]
-        _ensure_mixsort_paths(root)
+        archive_root = (
+            Path(project_root)
+            if project_root
+            else Path(__file__).resolve().parent
+        )
+        _ensure_mixsort_paths(archive_root)
 
         # Build args namespace matching the upstream tracker's expectations.
         args = SimpleNamespace(
@@ -80,7 +84,14 @@ class MixSortTracker(MultiObjectTracker):
         )
         # Tell the upstream code where the config lives. It hard-codes a relative path
         # ../../MixViT — we patch that by injecting cfg_file directly into Settings.
-        self._cfg_file = str(root / "third_party" / "MixViT" / "experiments" / script / f"{config}.yaml")
+        self._cfg_file = str(
+            archive_root
+            / "third_party"
+            / "MixViT"
+            / "experiments"
+            / script
+            / f"{config}.yaml"
+        )
 
         # Import MixSort tracker AFTER paths are set
         from mixsort.mixsort_tracker.mixsort_tracker import MIXTracker as MixTracker

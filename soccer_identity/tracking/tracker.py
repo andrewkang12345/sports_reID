@@ -264,23 +264,8 @@ class SimpleIoUTracker(MultiObjectTracker):
 def build_tracker(config: dict[str, Any]) -> MultiObjectTracker:
     tracker_config = config.get("tracker", {})
     backend = str(tracker_config.get("backend", "simple_iou")).lower()
-    if backend not in {"simple_iou", "detector", "detector_ids", "bytetrack", "botsort", "strongsort", "deepsort", "sportsmot", "mixsort", "sportsmot_mixsort", "boxmot_botsort", "mixsort_mixformer"}:
+    if backend not in {"simple_iou", "detector", "detector_ids", "bytetrack", "botsort", "strongsort", "deepsort", "sportsmot", "mixsort", "sportsmot_mixsort", "boxmot_botsort"}:
         raise ValueError(f"Unsupported tracker backend: {backend}")
-    if backend == "mixsort_mixformer":
-        from soccer_identity.tracking.mixsort_wrapper import MixSortTracker
-        return MixSortTracker(
-            mixformer_weights=str(tracker_config.get("mixformer_weights", "models/mixsort/MixFormer_soccernet_train.pth.tar")),
-            device=str(tracker_config.get("device", "cuda:0")),
-            track_thresh=float(tracker_config.get("track_thresh", 0.5)),
-            track_buffer=int(tracker_config.get("track_buffer", 60)),
-            match_thresh=float(tracker_config.get("match_thresh", 0.8)),
-            alpha=float(tracker_config.get("alpha", 0.6)),
-            radius=int(tracker_config.get("radius", 0)),
-            iou_thresh=float(tracker_config.get("iou_thresh", 0.3)),
-            script=str(tracker_config.get("script", "mixformer_deit")),
-            config=str(tracker_config.get("mixformer_config", "soccernet")),
-            frame_rate=int(tracker_config.get("frame_rate", 30)),
-        )
     if backend == "boxmot_botsort":
         reid_weights = str(tracker_config.get("reid_weights", "osnet_x0_25_msmt17.pt"))
         device = str(tracker_config.get("device", "cuda:0"))

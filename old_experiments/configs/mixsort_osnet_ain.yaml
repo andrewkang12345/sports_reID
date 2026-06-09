@@ -1,5 +1,6 @@
 # MixSort variant of default.yaml — only the tracker backend differs.
-# Use with: python3 run_demo.py --config configs/mixsort.yaml ...
+# Historical local MixSort configuration; the backend is archived and no longer
+# registered by the active run_demo.py tracker factory.
 video:
   max_seconds: 30.0
 
@@ -93,7 +94,7 @@ body_reid:
 
 appearance_memory:
   enabled: true
-  reid_weights: clip_market1501.pt
+  reid_weights: osnet_ain_x1_0_msmt17.pt
   frame_stride: 3
   anchor_score_threshold: 0.70
   k_anchors_per_jersey: 3

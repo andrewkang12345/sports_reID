@@ -1,17 +1,16 @@
-# End-to-end A/B against v54_sticky_stitch.yaml.
-# The only behavioral change is OSNet-AIN for cross-track appearance memory.
-
+# MixSort variant of default.yaml — only the tracker backend differs.
+# Historical local MixSort configuration; the backend is archived and no longer
+# registered by the active run_demo.py tracker factory.
 video:
   max_seconds: 30.0
 
 detector:
   backend: ultralytics
   confidence_threshold: 0.15
-  weights: yolo11x-seg.pt
+  weights: yolo11m-seg.pt
   device: cuda
   image_size: 960
   use_tracking: false
-  tracker_config: configs/botsort_soccer.yaml
 
 pose:
   enabled: true
@@ -39,24 +38,18 @@ super_resolution:
     confidence_floor: 0.35
 
 tracker:
-  backend: boxmot_botsort
-  reid_weights: clip_market1501.pt
+  backend: mixsort_mixformer
+  mixformer_weights: models/mixsort/MixFormer_soccernet_train.pth.tar
   device: cuda:0
-  track_high_thresh: 0.25
-  track_low_thresh: 0.10
-  new_track_thresh: 0.35
-  track_buffer: 300
-  match_thresh: 0.85
-  proximity_thresh: 0.4
-  appearance_thresh: 0.50
-  cmc_method: sof
+  track_thresh: 0.25    # broadcast soccer with ~20 players needs permissive threshold; upstream 0.5 misses too many
+  track_buffer: 90
+  match_thresh: 0.8
+  alpha: 0.6            # fuse IoU vs MixFormer similarity
+  radius: 0
+  iou_thresh: 0.3
+  script: mixformer_deit
+  mixformer_config: soccernet
   frame_rate: 30
-  fuse_first_associate: true
-  max_age_frames: 14
-  min_iou: 0.03
-  max_center_distance: 130.0
-  iou_weight: 0.65
-  center_weight: 0.35
 
 tracking:
   min_tracklet_observations: 2
@@ -75,10 +68,6 @@ role_filter:
   upper_sideline_y_ratio: 0.04
   side_sideline_x_ratio: 0.015
   sideline_penalty: 0.15
-  referee_min_hue_dist: 35
-  gk_min_hue_dist: 50
-  min_observations: 1
-  gk_require_uniform_kit: false
 
 jersey_ocr:
   backend: parseq_soccernet
@@ -92,10 +81,10 @@ jersey_ocr:
   fuzzy_substring_weight: 0.7
   peak_lock_threshold: 0.80
   peak_lock_min_count: 2
-  strict_roster: false
+  strict_roster: true
   kit_isolate: true
-  multi_region: false
-  confusable_smooth_strength: 0.0
+  multi_region: false   # disabled for tracker A/B test (saves ~3x OCR cost); revisit after picking tracker
+  confusable_smooth_strength: 0.0   # per-frame smoothing dilutes peak-lock threshold; apply post-aggregation if at all
 
 headshot_matcher:
   enabled: true
@@ -104,10 +93,8 @@ body_reid:
   enabled: true
 
 appearance_memory:
-  min_ocr_bbox_height: 60
-  min_ocr_bbox_width: 25
   enabled: true
-  reid_weights: osnet_ain_x1_0_msmt17.pt
+  reid_weights: clip_market1501.pt
   frame_stride: 3
   anchor_score_threshold: 0.70
   k_anchors_per_jersey: 3
@@ -147,10 +134,3 @@ visualization:
   peak_lock_threshold: 0.85
   peak_lock_min_count: 4
   longer_lock_min_count: 2
-
-track_stitching:
-  enabled: true
-  app_threshold: 0.65
-  max_gap_sec: 3.0
-  max_overlap_sec: 1.0
-  max_center_dist: 250.0

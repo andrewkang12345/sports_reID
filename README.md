@@ -17,8 +17,8 @@ pip install torch torchvision
 pip install opencv-python numpy pyyaml scipy pillow imageio-ffmpeg ultralytics boxmot==10.0.83 gdown
 ```
 
-The repository does not store model binaries. Restore the default checkpoint set
-(about 1.7 GB) from the public upstream projects:
+The repository does not store model binaries. Restore the runtime checkpoint set
+from the public upstream projects:
 
 ```bash
 python scripts/download_checkpoints.py
@@ -33,9 +33,8 @@ SHA-256 digest of the development checkout. Use `--group yolo` or
 | Local path(s) | Public source |
 | --- | --- |
 | `yolo11n.pt`, `yolo11s.pt`, `yolo11m.pt`, `yolo11m-seg.pt`, `yolo11x-seg.pt`, `yolo11m-pose.pt` | [Ultralytics](https://github.com/ultralytics/ultralytics) release assets, downloaded by the `ultralytics` package |
-| `clip_market1501.pt`, `osnet_x0_25_msmt17.pt`, `osnet_x1_0_msmt17.pt`, `osnet_ain_x1_0_msmt17.pt` | [BoxMOT ReID model zoo](https://github.com/mikel-brostrom/boxmot) |
+| `clip_market1501.pt`, `osnet_x1_0_msmt17.pt` | [BoxMOT ReID model zoo](https://github.com/mikel-brostrom/boxmot) |
 | `models/parseq_soccernet.ckpt`, `models/mkoshkina_legibility_resnet34.pth` | [A General Framework for Jersey Number Recognition in Sports Video](https://github.com/mkoshkina/jersey-number-pipeline) |
-| `models/mixsort/MixFormer_soccernet_train.pth.tar` | [MixSort model zoo](https://github.com/MCG-NJU/MixSort) |
 | `/mnt/data/reid_models/checkpoints/transreid_msmt17_vit.pth` | [Official TransReID MSMT17 model](https://drive.google.com/file/d/1x6Na97ycxS0t2Dn_0iRKWe1U5ccIqASK/view); setup commands are in [`experiments/README.md`](experiments/README.md) |
 
 The upstream projects control the checkpoint licenses and usage terms. Review those
@@ -69,6 +68,18 @@ terms before redistribution or commercial use.
 `team_colors` is optional but useful for the fallback team classifier. `headshot_path` and `headshot_url` are optional; local `headshot_path` values are resolved relative to the metadata file.
 
 ## Run Inference
+
+The current best measured stack is:
+
+```bash
+python run_demo.py \
+  --video path/to/your_clip.mp4 \
+  --metadata sample_data/test_metadata.json \
+  --output_dir outputs/best_stack \
+  --config configs/best_stack.yaml
+```
+
+For a dependency-light smoke test, use the default configuration:
 
 ```bash
 python run_demo.py \
@@ -154,31 +165,28 @@ The main stages are:
 
 ## Active Demo Backends
 
-The default broadcast demo now uses:
+The best measured broadcast stack uses:
 
-- Player detector: Ultralytics YOLO11m-seg COCO `person` detections and masks on CUDA.
-- Ball detector: Ultralytics YOLO with an OpenCV fallback.
-- Tracker ReID: BoxMOT BoT-SORT with `clip_market1501.pt`, a CLIP-ReID embedding model used for appearance association.
-- Best measured tracker ReID: `v56_transreid_tracker.yaml` replaces CLIP with the official TransReID ViT-B MSMT17 embedding through `soccer_identity/identity/transreid_backend.py`.
-- Cross-track ReID: the `v54_sticky_stitch.yaml` stack additionally enables OSNet (`osnet_x1_0_msmt17.pt`) for appearance-memory clustering and fragment stitching. This path is disabled in `configs/default.yaml` because it must be evaluated per experiment.
+- Player detector: Ultralytics YOLO11x-seg COCO `person` detections and masks on CUDA.
+- Tracker ReID: BoxMOT BoT-SORT with the official TransReID ViT-B MSMT17 embedding through `soccer_identity/identity/transreid_backend.py`.
+- Cross-track ReID: OSNet x1.0 MSMT17 appearance-memory clustering and fragment stitching.
 - Team/player gating: metadata kit colors, including shirt and shorts when available, plus sideline truncation checks to suppress referees, coaches, and staff where possible.
-- Auxiliary body identity feature: a local HSV histogram contributes to identity fusion, but it is separate from and does not replace the CLIP tracker ReID.
+- Auxiliary body identity feature: a local HSV histogram contributes to identity fusion, but it is separate from the tracker and cross-track ReID encoders.
 - Jersey number: SoccerNet-fine-tuned PARSeq, with conservative template OCR as a fallback.
 - Face/headshot: enabled when roster metadata provides headshot paths.
 
 Low-confidence identities are displayed as `Low conf ID` in the visualization instead of implying a real player identity. The checkpoint downloader and source table above restore the public model files expected by these backends.
 
-## ReID Experiment Results
+## Current Result
 
-The reproducible `groundTruth_AllTracking_ARG_FRA_183303` sweep covers CLIP,
-TransReID, SOLIDER, DINOv2, three OSNet variants, HSV, OpenGait, and weighted
-appearance-model combinations. See
-[`experiments/ARG_FRA_183303_RESULTS.md`](experiments/ARG_FRA_183303_RESULTS.md)
-for metrics, official checkpoint sources, unavailable-model notes, fusion results,
-and end-to-end A/B tests. Replacing CLIP inside BoT-SORT with TransReID increased
-identity accuracy from 88.1% to 89.3% and reduced ID switches from 39 to 38, making
-`v56_transreid_tracker.yaml` the current best measured full-stack configuration on
-this clip.
+On `groundTruth_AllTracking_ARG_FRA_183303`, the best stack reached 94.6% detection
+recall, 72.2% jersey accuracy, 89.3% identity accuracy, and 38 ID switches. See
+[`experiments/README.md`](experiments/README.md) for reproduction details and
+[`experiments/results/best_stack_eval.json`](experiments/results/best_stack_eval.json)
+for the aggregate metrics.
+
+Superseded configurations, evaluation scripts, MixSort integrations, and broad ReID
+model sweeps are retained under [`old_experiments/`](old_experiments/README.md).
 
 ## Replacing Perception Modules
 
@@ -258,7 +266,7 @@ For a production training set, build rows from frozen tracklet evidence: team lo
 - The default OpenCV detector/tracker is only a runnable fallback. It is not a substitute for YOLO/RT-DETR plus ByteTrack/BoT-SORT on real broadcasts.
 - The template jersey OCR fallback only handles clear high-contrast digits and intentionally suppresses weak evidence.
 - Headshot matching uses a simple image embedding unless replaced with a face/head model.
-- The identity-fusion `body_reid` feature is still an HSV histogram. Tracking itself uses CLIP-ReID, and the optional cross-track appearance-memory/stitching path uses OSNet; these three appearance signals should be evaluated separately.
+- The identity-fusion `body_reid` feature is still an HSV histogram. The best stack uses TransReID for tracker association and OSNet for cross-track memory; these three appearance signals remain separate.
 - Position priors are weak unless pitch calibration is available.
 - Image-space ball proximity is used when calibration is absent, so camera zoom and perspective can affect thresholds.
 

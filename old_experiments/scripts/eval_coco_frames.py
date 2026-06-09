@@ -1,6 +1,7 @@
 """End-to-end identity-accuracy evaluator against the per-frame COCO ground truth.
 
-For each of the 31 labeled frames in groundTruth_ARG_FRA_183303/:
+For each of the 31 labeled frames in
+old_experiments/data/groundTruth_ARG_FRA_183303/:
   1. Look up the matching clip frame (mp4-NNNN <-> clip_frame NNNN*30).
   2. From the run's debug_tracks.json, find each track's bbox at that frame.
   3. Greedily match predicted bboxes to GT bboxes by IoU >= 0.5.
@@ -33,7 +34,7 @@ def _ascii_normalize(text: str) -> str:
         return text
     return "".join(c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn")
 
-GT_DIR = Path("groundTruth_ARG_FRA_183303")
+GT_DIR = Path("old_experiments/data/groundTruth_ARG_FRA_183303")
 GT_JSON = GT_DIR / "_annotations.coco.json"
 
 

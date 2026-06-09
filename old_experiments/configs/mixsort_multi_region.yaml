@@ -1,5 +1,6 @@
 # MixSort variant of default.yaml — only the tracker backend differs.
-# Use with: python3 run_demo.py --config configs/mixsort.yaml ...
+# Historical local MixSort configuration; the backend is archived and no longer
+# registered by the active run_demo.py tracker factory.
 video:
   max_seconds: 30.0
 
@@ -82,7 +83,7 @@ jersey_ocr:
   peak_lock_min_count: 2
   strict_roster: true
   kit_isolate: true
-  multi_region: false   # disabled for tracker A/B test (saves ~3x OCR cost); revisit after picking tracker
+  multi_region: true   # disabled for tracker A/B test (saves ~3x OCR cost); revisit after picking tracker
   confusable_smooth_strength: 0.0   # per-frame smoothing dilutes peak-lock threshold; apply post-aggregation if at all
 
 headshot_matcher:

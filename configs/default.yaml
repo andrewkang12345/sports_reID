@@ -76,9 +76,7 @@ role_filter:
   upper_sideline_y_ratio: 0.04
   side_sideline_x_ratio: 0.015
   sideline_penalty: 0.15
-  # v18-style role classifier: looser (no min-observations gate, no GK uniform-kit signature).
-  # The tighter variant (min_observations=5, gk_require_uniform_kit=true) was added in v23 to
-  # prune false-positive GKs but DROPPED real Emiliano (#23) from 100%->0% on COCO frame eval.
+  # Loose role gating preserves real goalkeeper tracks on short clips.
   referee_min_hue_dist: 35
   gk_min_hue_dist: 50
   min_observations: 1
@@ -97,9 +95,7 @@ jersey_ocr:
   # Persistence: lock jersey to track once seen confidently on >= peak_min_count frames.
   peak_lock_threshold: 0.80
   peak_lock_min_count: 2
-  # v18-style OCR: no roster filtering at OCR time, no multi-region, no smoothing.
-  # The smoothing + multi-region options helped on the isolated COCO bbox eval (eval_ocr_stack.py)
-  # but regressed end-to-end (eval_coco_frames.py); enable only after measuring per-change.
+  # Roster filtering, multi-region OCR, and confusable smoothing remain opt-in.
   strict_roster: false
   kit_isolate: true
   multi_region: false

@@ -29,7 +29,7 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_GT = ROOT / "groundTruth_AllTracking_ARG_FRA_183303"
 DEFAULT_EXTERNAL = Path("/mnt/data/reid_models")
 if str(ROOT) not in sys.path:

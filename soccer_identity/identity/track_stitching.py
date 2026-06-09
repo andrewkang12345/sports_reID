@@ -260,10 +260,8 @@ def stitch_tracks(
                 changed = True
             if changed:
                 n_propagated += 1
-    # NOTE: previous experiments (v37/v38/v39/v40) tried to propagate the canonical
-    # roster jersey across all tracks of a resolved player. This propagated resolver
-    # mistakes (Molina mis-resolved as Enzo, etc.) and regressed detection benchmark
-    # by ~20pp. Disabled. v32 (stitcher only, no jersey override) remains best.
+    # Do not propagate a canonical jersey across every resolved-player track. A
+    # single resolver mistake can otherwise contaminate the whole stitched group.
     n_player_propagated = 0
     return {
         "groups": n_groups_merged,

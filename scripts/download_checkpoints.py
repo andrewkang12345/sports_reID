@@ -39,21 +39,9 @@ GDRIVE_CHECKPOINTS = (
         "BoxMOT ReID model zoo",
     ),
     GoogleDriveCheckpoint(
-        "osnet_x0_25_msmt17.pt",
-        "1sSwXSUlj4_tHZequ_iZ8w_Jh0VaRQMqF",
-        "6f57607fed9f502b9efed546108132ee715df5a5b6e6932c6269bacb47f59f99",
-        "BoxMOT ReID model zoo",
-    ),
-    GoogleDriveCheckpoint(
         "osnet_x1_0_msmt17.pt",
         "112EMUfBPYeYg70w-syK6V6Mx8-Qb9Q1M",
         "b7d73dc67c016fd044e4027ff856019496392a7aca8fa0ed56d862a1632c1cf2",
-        "BoxMOT ReID model zoo",
-    ),
-    GoogleDriveCheckpoint(
-        "osnet_ain_x1_0_msmt17.pt",
-        "1SigwBE6mPdqiJMqhuIY4aqC7--5CsMal",
-        "8a07e8da38946f7cee37f4561617bf8b6d2fe8f3a4027852893ea092e46d919f",
         "BoxMOT ReID model zoo",
     ),
     GoogleDriveCheckpoint(
@@ -67,12 +55,6 @@ GDRIVE_CHECKPOINTS = (
         "18HAuZbge3z8TSfRiX_FzsnKgiBs-RRNw",
         "b9c61dabaea4a6ec99528c5ae394f5875aecb8207de38484eccb0f977a373e41",
         "mkoshkina/jersey-number-pipeline SoccerNet legibility classifier",
-    ),
-    GoogleDriveCheckpoint(
-        "models/mixsort/MixFormer_soccernet_train.pth.tar",
-        "1FjH4mVdDyRuRJM5aHgYWeOnNjW3x-SLI",
-        "c5cae9f8881545a3049505e0538543adf2fb97ddd295bb8ebdb6bd3605d432c2",
-        "MCG-NJU/MixSort model zoo",
     ),
 )
 

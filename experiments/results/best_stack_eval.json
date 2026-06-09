@@ -1,6 +1,8 @@
 {
-  "run": "v56_transreid_tracker",
-  "baseline": "v54_sticky_stitch",
+  "run": "best_stack",
+  "config": "configs/best_stack.yaml",
+  "historical_run": "v56_transreid_tracker",
+  "baseline": "old_experiments/configs/v54_sticky_stitch.yaml",
   "protocol": "eval_tracking.py on groundTruth_AllTracking_ARG_FRA_183303",
   "changed_component": "BoT-SORT tracker ReID encoder: CLIP Market1501 to TransReID ViT-B MSMT17",
   "fixed_components": [

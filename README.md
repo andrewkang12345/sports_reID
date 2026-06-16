@@ -148,10 +148,11 @@ python sample_data/generate_sample_data.py
 
 The repository also includes a lacrosse adaptation for the NLL game Colorado Mammoth
 vs. San Diego Seals on 2019-04-19. The metadata records San Diego 12, Colorado 7,
-with anonymous roster slots because player identity labels are not provided with the
-clip. Referee logic is sport-specific: box-lacrosse officials are treated as
-black-white striped shirts, black shorts, and no helmet; soccer goalkeeper role
-heuristics are disabled for lacrosse.
+with 2018-19 player number/name mappings from the team media guides. Referee logic
+is sport-specific: box-lacrosse officials are treated as black-white striped shirts,
+black shorts, and no helmet; soccer goalkeeper role heuristics are disabled for
+lacrosse. The lacrosse visualization names players only when a jersey number survives
+the jersey-vote threshold.
 
 Prepare a 30-second local clip from the staged source video:
 

@@ -6,7 +6,7 @@ from typing import Any
 import cv2
 import numpy as np
 
-from soccer_identity.utils.geometry import bbox_area
+from soccer_identity.utils.geometry import bbox_area, iou_xyxy
 from soccer_identity.utils.schemas import BBox, Detection
 
 
@@ -83,6 +83,10 @@ class UltralyticsPlayerDetector(PlayerDetector):
         image_size: int | None = None,
         use_tracking: bool = False,
         tracker_config: str = "botsort.yaml",
+        nms_iou_threshold: float = 0.55,
+        containment_threshold: float = 0.78,
+        min_bbox_height: float = 0.0,
+        min_bbox_width: float = 0.0,
     ) -> None:
         try:
             from ultralytics import YOLO
@@ -95,6 +99,10 @@ class UltralyticsPlayerDetector(PlayerDetector):
         self.image_size = image_size
         self.use_tracking = use_tracking
         self.tracker_config = tracker_config
+        self.nms_iou_threshold = nms_iou_threshold
+        self.containment_threshold = containment_threshold
+        self.min_bbox_height = min_bbox_height
+        self.min_bbox_width = min_bbox_width
 
     def detect(self, frame: np.ndarray, frame_index: int, timestamp: float) -> list[Detection]:
         predict_kwargs = {
@@ -138,6 +146,8 @@ class UltralyticsPlayerDetector(PlayerDetector):
                 conf = float(box.conf.item()) if hasattr(box.conf, "item") else float(box.conf)
                 xyxy = box.xyxy[0].detach().cpu().numpy().tolist()
                 bbox = BBox(*map(float, xyxy)).clipped(width, height)
+                if bbox.height < self.min_bbox_height or bbox.width < self.min_bbox_width:
+                    continue
                 track_id = None
                 if getattr(box, "id", None) is not None:
                     try:
@@ -166,7 +176,47 @@ class UltralyticsPlayerDetector(PlayerDetector):
                         attributes=attrs,
                     )
                 )
+        return _suppress_duplicate_detections(
+            detections,
+            iou_threshold=self.nms_iou_threshold,
+            containment_threshold=self.containment_threshold,
+        )
+
+
+def _suppress_duplicate_detections(
+    detections: list[Detection],
+    iou_threshold: float = 0.55,
+    containment_threshold: float = 0.78,
+) -> list[Detection]:
+    """Remove near-duplicate person boxes before tracking.
+
+    Broadcast lacrosse clusters often produce one clean full-body box plus smaller
+    partial boxes on the same player. If those all reach the tracker, each becomes an
+    active track and the renderer draws overlapping labels for one athlete.
+    """
+    if len(detections) <= 1:
         return detections
+    ordered = sorted(detections, key=lambda det: det.confidence, reverse=True)
+    kept: list[Detection] = []
+    for det in ordered:
+        duplicate = False
+        det_area = max(1.0, det.bbox.area)
+        for prev in kept:
+            if iou_xyxy(det.bbox.xyxy, prev.bbox.xyxy) >= iou_threshold:
+                duplicate = True
+                break
+            ix1 = max(det.bbox.x1, prev.bbox.x1)
+            iy1 = max(det.bbox.y1, prev.bbox.y1)
+            ix2 = min(det.bbox.x2, prev.bbox.x2)
+            iy2 = min(det.bbox.y2, prev.bbox.y2)
+            inter = max(0.0, ix2 - ix1) * max(0.0, iy2 - iy1)
+            if inter / det_area >= containment_threshold:
+                duplicate = True
+                break
+        if not duplicate:
+            kept.append(det)
+    kept.sort(key=lambda det: (det.bbox.y1, det.bbox.x1))
+    return kept
 
 
 def build_player_detector(config: dict[str, Any]) -> PlayerDetector:
@@ -183,6 +233,10 @@ def build_player_detector(config: dict[str, Any]) -> PlayerDetector:
                     image_size=detector_config.get("image_size"),
                     use_tracking=bool(detector_config.get("use_tracking", False)),
                     tracker_config=str(detector_config.get("tracker_config", "botsort.yaml")),
+                    nms_iou_threshold=float(detector_config.get("nms_iou_threshold", 0.55)),
+                    containment_threshold=float(detector_config.get("containment_threshold", 0.78)),
+                    min_bbox_height=float(detector_config.get("min_bbox_height", 0.0)),
+                    min_bbox_width=float(detector_config.get("min_bbox_width", 0.0)),
                 )
             except Exception:
                 if backend != "auto":

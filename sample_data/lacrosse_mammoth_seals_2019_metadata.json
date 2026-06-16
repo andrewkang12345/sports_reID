@@ -16,7 +16,7 @@
     "start_sec": 0.0,
     "duration_sec": 30.0
   },
-  "identity_labels_available": false,
+  "identity_labels_available": true,
   "team_colors": {
     "San Diego Seals": {
       "shirt": "#f4f4f0",
@@ -40,1411 +40,391 @@
   "public_source": {
     "video_title": "Colorado Mammoth vs. San Diego Seals 4/19/19 | Full Game",
     "url": "https://www.youtube.com/watch?v=culaKSsITCc",
-    "score_source_note": "NLL YouTube listing reports San Diego Seals 12, Colorado Mammoth 7."
+    "score_source_note": "NLL YouTube listing reports San Diego Seals 12, Colorado Mammoth 7.",
+    "schedule_source_note": "2019-20 San Diego Seals and Colorado Mammoth media guides list April 19, 2019 at Pechanga Arena: San Diego 12, Colorado 7.",
+    "roster_source_note": "Jersey/name mappings come from the 2018-19 season stats in the 2019-20 San Diego Seals and Colorado Mammoth media guides."
   },
   "rosters": {
     "San Diego Seals": [
       {
-        "player_id": "SD_00",
-        "player_name": "San Diego Seals #0",
-        "team_name": "San Diego Seals",
-        "jersey_number": 0,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_01",
-        "player_name": "San Diego Seals #1",
+        "player_id": "SD_01_connor_kelly",
+        "player_name": "Connor Kelly",
         "team_name": "San Diego Seals",
         "jersey_number": 1,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_02",
-        "player_name": "San Diego Seals #2",
+        "player_id": "SD_02_drew_belgrave",
+        "player_name": "Drew Belgrave",
         "team_name": "San Diego Seals",
         "jersey_number": 2,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "SD_03",
-        "player_name": "San Diego Seals #3",
+        "player_id": "SD_03_garrett_mcintosh",
+        "player_name": "Garrett McIntosh",
         "team_name": "San Diego Seals",
         "jersey_number": 3,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_04",
-        "player_name": "San Diego Seals #4",
+        "player_id": "SD_04_ethan_schott",
+        "player_name": "Ethan Schott",
         "team_name": "San Diego Seals",
         "jersey_number": 4,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_05",
-        "player_name": "San Diego Seals #5",
+        "player_id": "SD_05_connor_fields",
+        "player_name": "Connor Fields",
         "team_name": "San Diego Seals",
         "jersey_number": 5,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_06",
-        "player_name": "San Diego Seals #6",
+        "player_id": "SD_06_dan_dawson",
+        "player_name": "Dan Dawson",
         "team_name": "San Diego Seals",
         "jersey_number": 6,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_07",
-        "player_name": "San Diego Seals #7",
+        "player_id": "SD_07_tor_reinholdt",
+        "player_name": "Tor Reinholdt",
         "team_name": "San Diego Seals",
         "jersey_number": 7,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_08",
-        "player_name": "San Diego Seals #8",
+        "player_id": "SD_08_quinn_mackay",
+        "player_name": "Quinn MacKay",
         "team_name": "San Diego Seals",
         "jersey_number": 8,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_09",
-        "player_name": "San Diego Seals #9",
-        "team_name": "San Diego Seals",
-        "jersey_number": 9,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_10",
-        "player_name": "San Diego Seals #10",
+        "player_id": "SD_10_brendan_ranford",
+        "player_name": "Brendan Ranford",
         "team_name": "San Diego Seals",
         "jersey_number": 10,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_11",
-        "player_name": "San Diego Seals #11",
+        "player_id": "SD_11_kyle_hartzell",
+        "player_name": "Kyle Hartzell",
         "team_name": "San Diego Seals",
         "jersey_number": 11,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_12",
-        "player_name": "San Diego Seals #12",
-        "team_name": "San Diego Seals",
-        "jersey_number": 12,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_13",
-        "player_name": "San Diego Seals #13",
+        "player_id": "SD_13_garrett_billings",
+        "player_name": "Garrett Billings",
         "team_name": "San Diego Seals",
         "jersey_number": 13,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_14",
-        "player_name": "San Diego Seals #14",
-        "team_name": "San Diego Seals",
-        "jersey_number": 14,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_15",
-        "player_name": "San Diego Seals #15",
+        "player_id": "SD_15_turner_evans",
+        "player_name": "Turner Evans",
         "team_name": "San Diego Seals",
         "jersey_number": 15,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_16",
-        "player_name": "San Diego Seals #16",
-        "team_name": "San Diego Seals",
-        "jersey_number": 16,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_17",
-        "player_name": "San Diego Seals #17",
+        "player_id": "SD_17_brodie_merrill",
+        "player_name": "Brodie Merrill",
         "team_name": "San Diego Seals",
         "jersey_number": 17,
-        "position": "Runner"
+        "position": "Defense/Transition"
       },
       {
-        "player_id": "SD_18",
-        "player_name": "San Diego Seals #18",
-        "team_name": "San Diego Seals",
-        "jersey_number": 18,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_19",
-        "player_name": "San Diego Seals #19",
+        "player_id": "SD_19_cam_holding",
+        "player_name": "Cam Holding",
         "team_name": "San Diego Seals",
         "jersey_number": 19,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_20",
-        "player_name": "San Diego Seals #20",
-        "team_name": "San Diego Seals",
-        "jersey_number": 20,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_21",
-        "player_name": "San Diego Seals #21",
+        "player_id": "SD_21_casey_jackson",
+        "player_name": "Casey Jackson",
         "team_name": "San Diego Seals",
         "jersey_number": 21,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_22",
-        "player_name": "San Diego Seals #22",
+        "player_id": "SD_22_joe_walters",
+        "player_name": "Joe Walters",
         "team_name": "San Diego Seals",
         "jersey_number": 22,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_23",
-        "player_name": "San Diego Seals #23",
-        "team_name": "San Diego Seals",
-        "jersey_number": 23,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_24",
-        "player_name": "San Diego Seals #24",
-        "team_name": "San Diego Seals",
-        "jersey_number": 24,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_25",
-        "player_name": "San Diego Seals #25",
-        "team_name": "San Diego Seals",
-        "jersey_number": 25,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_26",
-        "player_name": "San Diego Seals #26",
+        "player_id": "SD_26_paul_dawson",
+        "player_name": "Paul Dawson",
         "team_name": "San Diego Seals",
         "jersey_number": 26,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_27",
-        "player_name": "San Diego Seals #27",
-        "team_name": "San Diego Seals",
-        "jersey_number": 27,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_28",
-        "player_name": "San Diego Seals #28",
-        "team_name": "San Diego Seals",
-        "jersey_number": 28,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_29",
-        "player_name": "San Diego Seals #29",
-        "team_name": "San Diego Seals",
-        "jersey_number": 29,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_30",
-        "player_name": "San Diego Seals #30",
+        "player_id": "SD_30_johnny_pearson",
+        "player_name": "Johnny Pearson",
         "team_name": "San Diego Seals",
         "jersey_number": 30,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "SD_31",
-        "player_name": "San Diego Seals #31",
-        "team_name": "San Diego Seals",
-        "jersey_number": 31,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_32",
-        "player_name": "San Diego Seals #32",
+        "player_id": "SD_32_nick_ossello",
+        "player_name": "Nick Ossello",
         "team_name": "San Diego Seals",
         "jersey_number": 32,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_33",
-        "player_name": "San Diego Seals #33",
+        "player_id": "SD_33_zach_miller",
+        "player_name": "Zach Miller",
         "team_name": "San Diego Seals",
         "jersey_number": 33,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_34",
-        "player_name": "San Diego Seals #34",
-        "team_name": "San Diego Seals",
-        "jersey_number": 34,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_35",
-        "player_name": "San Diego Seals #35",
-        "team_name": "San Diego Seals",
-        "jersey_number": 35,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_36",
-        "player_name": "San Diego Seals #36",
-        "team_name": "San Diego Seals",
-        "jersey_number": 36,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_37",
-        "player_name": "San Diego Seals #37",
-        "team_name": "San Diego Seals",
-        "jersey_number": 37,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_38",
-        "player_name": "San Diego Seals #38",
-        "team_name": "San Diego Seals",
-        "jersey_number": 38,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_39",
-        "player_name": "San Diego Seals #39",
-        "team_name": "San Diego Seals",
-        "jersey_number": 39,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_40",
-        "player_name": "San Diego Seals #40",
-        "team_name": "San Diego Seals",
-        "jersey_number": 40,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_41",
-        "player_name": "San Diego Seals #41",
-        "team_name": "San Diego Seals",
-        "jersey_number": 41,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_42",
-        "player_name": "San Diego Seals #42",
-        "team_name": "San Diego Seals",
-        "jersey_number": 42,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_43",
-        "player_name": "San Diego Seals #43",
-        "team_name": "San Diego Seals",
-        "jersey_number": 43,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_44",
-        "player_name": "San Diego Seals #44",
+        "player_id": "SD_44_graydon_bradley",
+        "player_name": "Graydon Bradley",
         "team_name": "San Diego Seals",
         "jersey_number": 44,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_45",
-        "player_name": "San Diego Seals #45",
-        "team_name": "San Diego Seals",
-        "jersey_number": 45,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_46",
-        "player_name": "San Diego Seals #46",
-        "team_name": "San Diego Seals",
-        "jersey_number": 46,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_47",
-        "player_name": "San Diego Seals #47",
-        "team_name": "San Diego Seals",
-        "jersey_number": 47,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_48",
-        "player_name": "San Diego Seals #48",
-        "team_name": "San Diego Seals",
-        "jersey_number": 48,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_49",
-        "player_name": "San Diego Seals #49",
-        "team_name": "San Diego Seals",
-        "jersey_number": 49,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_50",
-        "player_name": "San Diego Seals #50",
-        "team_name": "San Diego Seals",
-        "jersey_number": 50,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_51",
-        "player_name": "San Diego Seals #51",
-        "team_name": "San Diego Seals",
-        "jersey_number": 51,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_52",
-        "player_name": "San Diego Seals #52",
+        "player_id": "SD_52_garrett_epple",
+        "player_name": "Garrett Epple",
         "team_name": "San Diego Seals",
         "jersey_number": 52,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_53",
-        "player_name": "San Diego Seals #53",
-        "team_name": "San Diego Seals",
-        "jersey_number": 53,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_54",
-        "player_name": "San Diego Seals #54",
-        "team_name": "San Diego Seals",
-        "jersey_number": 54,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_55",
-        "player_name": "San Diego Seals #55",
-        "team_name": "San Diego Seals",
-        "jersey_number": 55,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_56",
-        "player_name": "San Diego Seals #56",
-        "team_name": "San Diego Seals",
-        "jersey_number": 56,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_57",
-        "player_name": "San Diego Seals #57",
-        "team_name": "San Diego Seals",
-        "jersey_number": 57,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_58",
-        "player_name": "San Diego Seals #58",
-        "team_name": "San Diego Seals",
-        "jersey_number": 58,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_59",
-        "player_name": "San Diego Seals #59",
+        "player_id": "SD_59_mikie_schlosser",
+        "player_name": "Mikie Schlosser",
         "team_name": "San Diego Seals",
         "jersey_number": 59,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "SD_60",
-        "player_name": "San Diego Seals #60",
-        "team_name": "San Diego Seals",
-        "jersey_number": 60,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_61",
-        "player_name": "San Diego Seals #61",
-        "team_name": "San Diego Seals",
-        "jersey_number": 61,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_62",
-        "player_name": "San Diego Seals #62",
-        "team_name": "San Diego Seals",
-        "jersey_number": 62,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_63",
-        "player_name": "San Diego Seals #63",
+        "player_id": "SD_63_brandon_clelland",
+        "player_name": "Brandon Clelland",
         "team_name": "San Diego Seals",
         "jersey_number": 63,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "SD_64",
-        "player_name": "San Diego Seals #64",
-        "team_name": "San Diego Seals",
-        "jersey_number": 64,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_65",
-        "player_name": "San Diego Seals #65",
-        "team_name": "San Diego Seals",
-        "jersey_number": 65,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_66",
-        "player_name": "San Diego Seals #66",
-        "team_name": "San Diego Seals",
-        "jersey_number": 66,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_67",
-        "player_name": "San Diego Seals #67",
-        "team_name": "San Diego Seals",
-        "jersey_number": 67,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_68",
-        "player_name": "San Diego Seals #68",
-        "team_name": "San Diego Seals",
-        "jersey_number": 68,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_69",
-        "player_name": "San Diego Seals #69",
-        "team_name": "San Diego Seals",
-        "jersey_number": 69,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_70",
-        "player_name": "San Diego Seals #70",
-        "team_name": "San Diego Seals",
-        "jersey_number": 70,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_71",
-        "player_name": "San Diego Seals #71",
-        "team_name": "San Diego Seals",
-        "jersey_number": 71,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_72",
-        "player_name": "San Diego Seals #72",
+        "player_id": "SD_72_adrian_sorichetti",
+        "player_name": "Adrian Sorichetti",
         "team_name": "San Diego Seals",
         "jersey_number": 72,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "SD_73",
-        "player_name": "San Diego Seals #73",
-        "team_name": "San Diego Seals",
-        "jersey_number": 73,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_74",
-        "player_name": "San Diego Seals #74",
-        "team_name": "San Diego Seals",
-        "jersey_number": 74,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_75",
-        "player_name": "San Diego Seals #75",
-        "team_name": "San Diego Seals",
-        "jersey_number": 75,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_76",
-        "player_name": "San Diego Seals #76",
-        "team_name": "San Diego Seals",
-        "jersey_number": 76,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_77",
-        "player_name": "San Diego Seals #77",
+        "player_id": "SD_77_jules_heningburg",
+        "player_name": "Jules Heningburg",
         "team_name": "San Diego Seals",
         "jersey_number": 77,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_78",
-        "player_name": "San Diego Seals #78",
-        "team_name": "San Diego Seals",
-        "jersey_number": 78,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_79",
-        "player_name": "San Diego Seals #79",
-        "team_name": "San Diego Seals",
-        "jersey_number": 79,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_80",
-        "player_name": "San Diego Seals #80",
-        "team_name": "San Diego Seals",
-        "jersey_number": 80,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_81",
-        "player_name": "San Diego Seals #81",
+        "player_id": "SD_81_connor_kearnan",
+        "player_name": "Connor Kearnan",
         "team_name": "San Diego Seals",
         "jersey_number": 81,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_82",
-        "player_name": "San Diego Seals #82",
-        "team_name": "San Diego Seals",
-        "jersey_number": 82,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_83",
-        "player_name": "San Diego Seals #83",
+        "player_id": "SD_83_austin_staats",
+        "player_name": "Austin Staats",
         "team_name": "San Diego Seals",
         "jersey_number": 83,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_84",
-        "player_name": "San Diego Seals #84",
-        "team_name": "San Diego Seals",
-        "jersey_number": 84,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_85",
-        "player_name": "San Diego Seals #85",
+        "player_id": "SD_85_tyler_carlson",
+        "player_name": "Tyler Carlson",
         "team_name": "San Diego Seals",
         "jersey_number": 85,
-        "position": "Runner"
+        "position": "Goaltender"
       },
       {
-        "player_id": "SD_86",
-        "player_name": "San Diego Seals #86",
-        "team_name": "San Diego Seals",
-        "jersey_number": 86,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_87",
-        "player_name": "San Diego Seals #87",
-        "team_name": "San Diego Seals",
-        "jersey_number": 87,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_88",
-        "player_name": "San Diego Seals #88",
-        "team_name": "San Diego Seals",
-        "jersey_number": 88,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_89",
-        "player_name": "San Diego Seals #89",
-        "team_name": "San Diego Seals",
-        "jersey_number": 89,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_90",
-        "player_name": "San Diego Seals #90",
-        "team_name": "San Diego Seals",
-        "jersey_number": 90,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_91",
-        "player_name": "San Diego Seals #91",
+        "player_id": "SD_91_kyle_buchanan",
+        "player_name": "Kyle Buchanan",
         "team_name": "San Diego Seals",
         "jersey_number": 91,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "SD_92",
-        "player_name": "San Diego Seals #92",
+        "player_id": "SD_92_frank_scigliano",
+        "player_name": "Frank Scigliano",
         "team_name": "San Diego Seals",
         "jersey_number": 92,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_93",
-        "player_name": "San Diego Seals #93",
-        "team_name": "San Diego Seals",
-        "jersey_number": 93,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_94",
-        "player_name": "San Diego Seals #94",
-        "team_name": "San Diego Seals",
-        "jersey_number": 94,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_95",
-        "player_name": "San Diego Seals #95",
-        "team_name": "San Diego Seals",
-        "jersey_number": 95,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_96",
-        "player_name": "San Diego Seals #96",
-        "team_name": "San Diego Seals",
-        "jersey_number": 96,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_97",
-        "player_name": "San Diego Seals #97",
-        "team_name": "San Diego Seals",
-        "jersey_number": 97,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_98",
-        "player_name": "San Diego Seals #98",
-        "team_name": "San Diego Seals",
-        "jersey_number": 98,
-        "position": "Runner"
-      },
-      {
-        "player_id": "SD_99",
-        "player_name": "San Diego Seals #99",
-        "team_name": "San Diego Seals",
-        "jersey_number": 99,
-        "position": "Runner"
+        "position": "Goaltender"
       }
     ],
     "Colorado Mammoth": [
       {
-        "player_id": "COL_00",
-        "player_name": "Colorado Mammoth #0",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 0,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_01",
-        "player_name": "Colorado Mammoth #1",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 1,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_02",
-        "player_name": "Colorado Mammoth #2",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 2,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_03",
-        "player_name": "Colorado Mammoth #3",
+        "player_id": "COL_03_tim_edwards",
+        "player_name": "Tim Edwards",
         "team_name": "Colorado Mammoth",
         "jersey_number": 3,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_04",
-        "player_name": "Colorado Mammoth #4",
+        "player_id": "COL_04_josh_sullivan",
+        "player_name": "Josh Sullivan",
         "team_name": "Colorado Mammoth",
         "jersey_number": 4,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_05",
-        "player_name": "Colorado Mammoth #5",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 5,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_06",
-        "player_name": "Colorado Mammoth #6",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 6,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_07",
-        "player_name": "Colorado Mammoth #7",
+        "player_id": "COL_07_john_st_john",
+        "player_name": "John St. John",
         "team_name": "Colorado Mammoth",
         "jersey_number": 7,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_08",
-        "player_name": "Colorado Mammoth #8",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 8,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_09",
-        "player_name": "Colorado Mammoth #9",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 9,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_10",
-        "player_name": "Colorado Mammoth #10",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 10,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_11",
-        "player_name": "Colorado Mammoth #11",
+        "player_id": "COL_11_taylor_stuart",
+        "player_name": "Taylor Stuart",
         "team_name": "Colorado Mammoth",
         "jersey_number": 11,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_12",
-        "player_name": "Colorado Mammoth #12",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 12,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_13",
-        "player_name": "Colorado Mammoth #13",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 13,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_14",
-        "player_name": "Colorado Mammoth #14",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 14,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_15",
-        "player_name": "Colorado Mammoth #15",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 15,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_16",
-        "player_name": "Colorado Mammoth #16",
+        "player_id": "COL_16_ryan_lee",
+        "player_name": "Ryan Lee",
         "team_name": "Colorado Mammoth",
         "jersey_number": 16,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_17",
-        "player_name": "Colorado Mammoth #17",
+        "player_id": "COL_17_chris_wardle",
+        "player_name": "Chris Wardle",
         "team_name": "Colorado Mammoth",
         "jersey_number": 17,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_18",
-        "player_name": "Colorado Mammoth #18",
+        "player_id": "COL_18_robert_hope",
+        "player_name": "Robert Hope",
         "team_name": "Colorado Mammoth",
         "jersey_number": 18,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_19",
-        "player_name": "Colorado Mammoth #19",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 19,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_20",
-        "player_name": "Colorado Mammoth #20",
+        "player_id": "COL_20_jacob_ruest",
+        "player_name": "Jacob Ruest",
         "team_name": "Colorado Mammoth",
         "jersey_number": 20,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_21",
-        "player_name": "Colorado Mammoth #21",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 21,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_22",
-        "player_name": "Colorado Mammoth #22",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 22,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_23",
-        "player_name": "Colorado Mammoth #23",
+        "player_id": "COL_23_jordan_gilles",
+        "player_name": "Jordan Gilles",
         "team_name": "Colorado Mammoth",
         "jersey_number": 23,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_24",
-        "player_name": "Colorado Mammoth #24",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 24,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_25",
-        "player_name": "Colorado Mammoth #25",
+        "player_id": "COL_25_brad_self",
+        "player_name": "Brad Self",
         "team_name": "Colorado Mammoth",
         "jersey_number": 25,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "COL_26",
-        "player_name": "Colorado Mammoth #26",
+        "player_id": "COL_26_cory_vitarelli",
+        "player_name": "Cory Vitarelli",
         "team_name": "Colorado Mammoth",
         "jersey_number": 26,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_27",
-        "player_name": "Colorado Mammoth #27",
+        "player_id": "COL_27_scott_carnegie",
+        "player_name": "Scott Carnegie",
         "team_name": "Colorado Mammoth",
         "jersey_number": 27,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_28",
-        "player_name": "Colorado Mammoth #28",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 28,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_29",
-        "player_name": "Colorado Mammoth #29",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 29,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_30",
-        "player_name": "Colorado Mammoth #30",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 30,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_31",
-        "player_name": "Colorado Mammoth #31",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 31,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_32",
-        "player_name": "Colorado Mammoth #32",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 32,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_33",
-        "player_name": "Colorado Mammoth #33",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 33,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_34",
-        "player_name": "Colorado Mammoth #34",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 34,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_35",
-        "player_name": "Colorado Mammoth #35",
+        "player_id": "COL_35_jeremy_noble",
+        "player_name": "Jeremy Noble",
         "team_name": "Colorado Mammoth",
         "jersey_number": 35,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_36",
-        "player_name": "Colorado Mammoth #36",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 36,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_37",
-        "player_name": "Colorado Mammoth #37",
+        "player_id": "COL_37_dan_coates",
+        "player_name": "Dan Coates",
         "team_name": "Colorado Mammoth",
         "jersey_number": 37,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_38",
-        "player_name": "Colorado Mammoth #38",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 38,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_39",
-        "player_name": "Colorado Mammoth #39",
+        "player_id": "COL_39_steve_fryer",
+        "player_name": "Steve Fryer",
         "team_name": "Colorado Mammoth",
         "jersey_number": 39,
-        "position": "Runner"
+        "position": "Goaltender"
       },
       {
-        "player_id": "COL_40",
-        "player_name": "Colorado Mammoth #40",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 40,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_41",
-        "player_name": "Colorado Mammoth #41",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 41,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_42",
-        "player_name": "Colorado Mammoth #42",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 42,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_43",
-        "player_name": "Colorado Mammoth #43",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 43,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_44",
-        "player_name": "Colorado Mammoth #44",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 44,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_45",
-        "player_name": "Colorado Mammoth #45",
+        "player_id": "COL_45_dillon_ward",
+        "player_name": "Dillon Ward",
         "team_name": "Colorado Mammoth",
         "jersey_number": 45,
-        "position": "Runner"
+        "position": "Goaltender"
       },
       {
-        "player_id": "COL_46",
-        "player_name": "Colorado Mammoth #46",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 46,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_47",
-        "player_name": "Colorado Mammoth #47",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 47,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_48",
-        "player_name": "Colorado Mammoth #48",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 48,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_49",
-        "player_name": "Colorado Mammoth #49",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 49,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_50",
-        "player_name": "Colorado Mammoth #50",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 50,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_51",
-        "player_name": "Colorado Mammoth #51",
+        "player_id": "COL_51_eli_mclaughlin",
+        "player_name": "Eli McLaughlin",
         "team_name": "Colorado Mammoth",
         "jersey_number": 51,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_52",
-        "player_name": "Colorado Mammoth #52",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 52,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_53",
-        "player_name": "Colorado Mammoth #53",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 53,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_54",
-        "player_name": "Colorado Mammoth #54",
+        "player_id": "COL_54_steven_lee",
+        "player_name": "Steven Lee",
         "team_name": "Colorado Mammoth",
         "jersey_number": 54,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_55",
-        "player_name": "Colorado Mammoth #55",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 55,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_56",
-        "player_name": "Colorado Mammoth #56",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 56,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_57",
-        "player_name": "Colorado Mammoth #57",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 57,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_58",
-        "player_name": "Colorado Mammoth #58",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 58,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_59",
-        "player_name": "Colorado Mammoth #59",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 59,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_60",
-        "player_name": "Colorado Mammoth #60",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 60,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_61",
-        "player_name": "Colorado Mammoth #61",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 61,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_62",
-        "player_name": "Colorado Mammoth #62",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 62,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_63",
-        "player_name": "Colorado Mammoth #63",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 63,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_64",
-        "player_name": "Colorado Mammoth #64",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 64,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_65",
-        "player_name": "Colorado Mammoth #65",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 65,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_66",
-        "player_name": "Colorado Mammoth #66",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 66,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_67",
-        "player_name": "Colorado Mammoth #67",
+        "player_id": "COL_67_kyle_killen",
+        "player_name": "Kyle Killen",
         "team_name": "Colorado Mammoth",
         "jersey_number": 67,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_68",
-        "player_name": "Colorado Mammoth #68",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 68,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_69",
-        "player_name": "Colorado Mammoth #69",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 69,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_70",
-        "player_name": "Colorado Mammoth #70",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 70,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_71",
-        "player_name": "Colorado Mammoth #71",
+        "player_id": "COL_71_jeff_wittig",
+        "player_name": "Jeff Wittig",
         "team_name": "Colorado Mammoth",
         "jersey_number": 71,
-        "position": "Runner"
+        "position": "Forward"
       },
       {
-        "player_id": "COL_72",
-        "player_name": "Colorado Mammoth #72",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 72,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_73",
-        "player_name": "Colorado Mammoth #73",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 73,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_74",
-        "player_name": "Colorado Mammoth #74",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 74,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_75",
-        "player_name": "Colorado Mammoth #75",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 75,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_76",
-        "player_name": "Colorado Mammoth #76",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 76,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_77",
-        "player_name": "Colorado Mammoth #77",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 77,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_78",
-        "player_name": "Colorado Mammoth #78",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 78,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_79",
-        "player_name": "Colorado Mammoth #79",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 79,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_80",
-        "player_name": "Colorado Mammoth #80",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 80,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_81",
-        "player_name": "Colorado Mammoth #81",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 81,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_82",
-        "player_name": "Colorado Mammoth #82",
+        "player_id": "COL_82_joey_cupido",
+        "player_name": "Joey Cupido",
         "team_name": "Colorado Mammoth",
         "jersey_number": 82,
-        "position": "Runner"
+        "position": "Transition"
       },
       {
-        "player_id": "COL_83",
-        "player_name": "Colorado Mammoth #83",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 83,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_84",
-        "player_name": "Colorado Mammoth #84",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 84,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_85",
-        "player_name": "Colorado Mammoth #85",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 85,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_86",
-        "player_name": "Colorado Mammoth #86",
+        "player_id": "COL_86_john_lintz",
+        "player_name": "John Lintz",
         "team_name": "Colorado Mammoth",
         "jersey_number": 86,
-        "position": "Runner"
+        "position": "Defense"
       },
       {
-        "player_id": "COL_87",
-        "player_name": "Colorado Mammoth #87",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 87,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_88",
-        "player_name": "Colorado Mammoth #88",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 88,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_89",
-        "player_name": "Colorado Mammoth #89",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 89,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_90",
-        "player_name": "Colorado Mammoth #90",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 90,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_91",
-        "player_name": "Colorado Mammoth #91",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 91,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_92",
-        "player_name": "Colorado Mammoth #92",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 92,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_93",
-        "player_name": "Colorado Mammoth #93",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 93,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_94",
-        "player_name": "Colorado Mammoth #94",
+        "player_id": "COL_94_julian_garritano",
+        "player_name": "Julian Garritano",
         "team_name": "Colorado Mammoth",
         "jersey_number": 94,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_95",
-        "player_name": "Colorado Mammoth #95",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 95,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_96",
-        "player_name": "Colorado Mammoth #96",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 96,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_97",
-        "player_name": "Colorado Mammoth #97",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 97,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_98",
-        "player_name": "Colorado Mammoth #98",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 98,
-        "position": "Runner"
-      },
-      {
-        "player_id": "COL_99",
-        "player_name": "Colorado Mammoth #99",
-        "team_name": "Colorado Mammoth",
-        "jersey_number": 99,
-        "position": "Runner"
+        "position": "Defense"
       }
     ]
   }

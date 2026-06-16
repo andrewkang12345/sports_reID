@@ -34,6 +34,7 @@ class VisualizationRenderer:
     min_jersey_display_confidence: float = 0.30
     peak_lock_threshold: float = 0.80
     peak_lock_min_count: int = 2
+    require_jersey_for_player_name: bool = False
 
     def render(
         self,
@@ -210,7 +211,13 @@ class VisualizationRenderer:
                 return f"{_ascii_normalize(player_via_jersey.player_name)} #{jersey}"
             return f"Low conf ID #{jersey}"
         # v20a: track lost dedup but resolver pinned a player at high confidence.
-        if player is not None and tracklet.resolved_confidence >= max(0.55, self.confidence_threshold):
+        # Sport configs can disable this; lacrosse should name players only from
+        # jersey-confirmed tracks because team-color-only evidence is too weak.
+        if (
+            not self.require_jersey_for_player_name
+            and player is not None
+            and tracklet.resolved_confidence >= max(0.55, self.confidence_threshold)
+        ):
             return f"{_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}"
         # v20b: track lost dedup AND was demoted by conflict resolution. The resolver
         # had pinned a player initially; if the track's top OCR candidate still agrees
@@ -219,7 +226,7 @@ class VisualizationRenderer:
         ev = tracklet.evidence if isinstance(tracklet.evidence, dict) else {}
         snapshot_name = ev.get("resolved_player_name_snapshot")
         snapshot_jersey = ev.get("resolved_player_jersey_snapshot")
-        if snapshot_name and snapshot_jersey:
+        if not self.require_jersey_for_player_name and snapshot_name and snapshot_jersey:
             cands = ev.get("jersey_candidates") if isinstance(ev.get("jersey_candidates"), list) else None
             if cands:
                 try:
@@ -313,4 +320,5 @@ def build_renderer(config: dict[str, Any], players: list[RosterPlayer]) -> Visua
         min_jersey_display_confidence=float(viz_config.get("min_jersey_display_confidence", 0.30)),
         peak_lock_threshold=float(viz_config.get("peak_lock_threshold", 0.80)),
         peak_lock_min_count=int(viz_config.get("peak_lock_min_count", 2)),
+        require_jersey_for_player_name=bool(viz_config.get("require_jersey_for_player_name", False)),
     )

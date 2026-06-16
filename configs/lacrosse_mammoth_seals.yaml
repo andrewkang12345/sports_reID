@@ -8,6 +8,10 @@ detector:
   device: cuda
   image_size: 640
   use_tracking: false
+  nms_iou_threshold: 0.45
+  containment_threshold: 0.62
+  min_bbox_height: 55
+  min_bbox_width: 22
 
 pose:
   enabled: false
@@ -95,6 +99,7 @@ visualization:
   h264_crf: 22
   min_player_likelihood: 0.30
   min_track_duration_sec: 0.12
-  min_jersey_display_confidence: 0.42
+  min_jersey_display_confidence: 0.30
+  require_jersey_for_player_name: true
   peak_lock_threshold: 0.82
   peak_lock_min_count: 2

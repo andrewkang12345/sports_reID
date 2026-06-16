@@ -18,13 +18,22 @@ detector:
   bottom_edge_margin_pixels: 3
 
 pose:
-  enabled: false
+  enabled: true
+  weights: yolo11m-pose.pt
+  device: cuda
+  crop_height: 320
+  conf: 0.05
 
 legibility:
   enabled: false
+  weights: models/mkoshkina_legibility_resnet34.pth
+  threshold: 0.10
+  gpu: true
+  input_size: 224
 
 super_resolution:
-  enabled: false
+  enabled: true
+  weights: null
 
 tracker:
   backend: simple_iou
@@ -61,10 +70,23 @@ role_filter:
   lacrosse_referee_top_lane_ratio: 0.36
 
 jersey_ocr:
-  backend: template
-  run_every_n_frames: 3
-  min_score: 0.15
-  min_margin: 0.030
+  backend: parseq_soccernet
+  gpu: true
+  weights: models/parseq_soccernet.ckpt
+  run_every_n_frames: 1
+  min_confidence: 0.40
+  min_height_px: 18
+  min_width_px: 14
+  upscale_height: 96
+  fuzzy_substring_weight: 0.7
+  peak_lock_threshold: 0.80
+  peak_lock_min_count: 2
+  strict_roster: true
+  kit_isolate: true
+  multi_region: false
+  confusable_smooth_strength: 0.0
+  min_score: 0.16
+  min_margin: 0.035
   score_temperature: 0.08
 
 headshot_matcher:
@@ -105,5 +127,6 @@ visualization:
   min_track_duration_sec: 0.12
   min_jersey_display_confidence: 0.30
   require_jersey_for_player_name: true
+  show_predicted_team: true
   peak_lock_threshold: 0.82
   peak_lock_min_count: 2

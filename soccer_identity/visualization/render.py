@@ -35,6 +35,7 @@ class VisualizationRenderer:
     peak_lock_threshold: float = 0.80
     peak_lock_min_count: int = 2
     require_jersey_for_player_name: bool = False
+    show_predicted_team: bool = False
 
     def render(
         self,
@@ -182,6 +183,7 @@ class VisualizationRenderer:
             return "Referee"
         if role == "goalkeeper":
             return "Goalkeeper"
+        predicted_team = self._predicted_team_label(tracklet)
         if jersey_by_track_id is not None:
             jersey = jersey_by_track_id.get(tracklet.track_id)
         else:
@@ -200,16 +202,20 @@ class VisualizationRenderer:
             player is not None
             and jersey is not None
             and str(player.jersey_number) == str(jersey)
+            and self._player_matches_predicted_team(player, tracklet)
         )
         if player is not None and tracklet.resolved_confidence >= self.confidence_threshold and ocr_confirms_player:
-            return f"{_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}"
+            team = predicted_team or self._team_label(player.team_name)
+            return self._with_team_prefix(f"{_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}", team)
         if player is not None and tracklet.resolved_confidence >= self.likely_threshold and ocr_confirms_player:
-            return f"Likely {_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}"
+            team = predicted_team or self._team_label(player.team_name)
+            return self._with_team_prefix(f"Likely {_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}", team)
         if jersey:
             player_via_jersey = self._player_from_jersey(tracklet, jersey, player_by_id)
             if player_via_jersey is not None:
-                return f"{_ascii_normalize(player_via_jersey.player_name)} #{jersey}"
-            return f"Low conf ID #{jersey}"
+                team = predicted_team or self._team_label(player_via_jersey.team_name)
+                return self._with_team_prefix(f"{_ascii_normalize(player_via_jersey.player_name)} #{jersey}", team)
+            return self._with_team_prefix(f"Low conf ID #{jersey}", predicted_team)
         # v20a: track lost dedup but resolver pinned a player at high confidence.
         # Sport configs can disable this; lacrosse should name players only from
         # jersey-confirmed tracks because team-color-only evidence is too weak.
@@ -218,7 +224,8 @@ class VisualizationRenderer:
             and player is not None
             and tracklet.resolved_confidence >= max(0.55, self.confidence_threshold)
         ):
-            return f"{_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}"
+            team = predicted_team or self._team_label(player.team_name)
+            return self._with_team_prefix(f"{_ascii_normalize(player.player_name)} #{player.jersey_number or '?'} {tracklet.resolved_confidence:.2f}", team)
         # v20b: track lost dedup AND was demoted by conflict resolution. The resolver
         # had pinned a player initially; if the track's top OCR candidate still agrees
         # on that player's jersey, trust the snapshot. Recovers fragments like
@@ -232,10 +239,42 @@ class VisualizationRenderer:
                 try:
                     top_j, top_s = cands[0]
                     if str(top_j) == str(snapshot_jersey) and float(top_s) >= 5.0:
-                        return f"Likely {_ascii_normalize(snapshot_name)} #{snapshot_jersey}"
+                        return self._with_team_prefix(f"Likely {_ascii_normalize(snapshot_name)} #{snapshot_jersey}", predicted_team)
                 except Exception:
                     pass
-        return "Low conf ID"
+        return self._with_team_prefix("Low conf ID", predicted_team)
+
+    def _predicted_team_label(self, tracklet: Tracklet) -> str | None:
+        if not self.show_predicted_team:
+            return None
+        team = tracklet.evidence.get("team_argmax") if isinstance(tracklet.evidence, dict) else None
+        return self._team_label(team) if team else None
+
+    @staticmethod
+    def _player_matches_predicted_team(player: RosterPlayer | None, tracklet: Tracklet) -> bool:
+        if player is None:
+            return False
+        team = tracklet.evidence.get("team_argmax") if isinstance(tracklet.evidence, dict) else None
+        return not team or player.team_name == team
+
+    @staticmethod
+    def _with_team_prefix(label: str, team: str | None) -> str:
+        return f"{team} {label}" if team else label
+
+    @staticmethod
+    def _team_label(team_name: str | None) -> str | None:
+        if not team_name:
+            return None
+        known = {
+            "San Diego Seals": "SD",
+            "Colorado Mammoth": "COL",
+        }
+        if team_name in known:
+            return known[team_name]
+        words = [word for word in team_name.replace("-", " ").split() if word]
+        if len(words) >= 2:
+            return "".join(word[0] for word in words[:3]).upper()
+        return team_name[:3].upper()
 
     def _player_from_jersey(
         self,
@@ -246,15 +285,17 @@ class VisualizationRenderer:
         matches = [p for p in player_by_id.values() if str(p.jersey_number) == str(jersey)]
         if not matches:
             return None
-        if len(matches) == 1:
-            return matches[0]
-        # Multiple teams share this jersey -> use the tracklet's team argmax (stamped by
-        # _stamp_team_argmax) to pick the right one (e.g. #10 -> Messi vs Mbappé).
+        # Use the tracklet's team argmax (stamped by _stamp_team_argmax) to pick the
+        # roster row. If the predicted team does not carry this jersey, do not attach a
+        # player name; show the team + number as low-confidence instead.
         team_argmax = tracklet.evidence.get("team_argmax") if isinstance(tracklet.evidence, dict) else None
         if team_argmax:
             for p in matches:
                 if p.team_name == team_argmax:
                     return p
+            return None
+        if len(matches) == 1:
+            return matches[0]
         return matches[0]
 
     @staticmethod
@@ -321,4 +362,5 @@ def build_renderer(config: dict[str, Any], players: list[RosterPlayer]) -> Visua
         peak_lock_threshold=float(viz_config.get("peak_lock_threshold", 0.80)),
         peak_lock_min_count=int(viz_config.get("peak_lock_min_count", 2)),
         require_jersey_for_player_name=bool(viz_config.get("require_jersey_for_player_name", False)),
+        show_predicted_team=bool(viz_config.get("show_predicted_team", False)),
     )

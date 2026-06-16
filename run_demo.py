@@ -366,11 +366,24 @@ def _enrich_jersey_roster_names(tracks: list[dict[str, Any]], players: list[Any]
     for track in tracks:
         if not track.get("is_player") or track.get("role") in {"referee", "goalkeeper"}:
             continue
+        track["player_name"] = None
+        track["jersey_number"] = None
+        track["identity_source"] = None
         resolved = track.get("resolved_player")
         if isinstance(resolved, dict) and resolved.get("player_name"):
-            track["player_name"] = resolved["player_name"]
-            track["jersey_number"] = resolved.get("jersey_number")
-            continue
+            resolved_team = resolved.get("team_name")
+            resolved_jersey = resolved.get("jersey_number")
+            track_team = track.get("predicted_team")
+            track_jersey = track.get("best_jersey_guess")
+            team_matches = not track_team or resolved_team == track_team
+            jersey_matches = not track_jersey or str(resolved_jersey) == str(track_jersey)
+            if team_matches and jersey_matches:
+                track["player_name"] = resolved["player_name"]
+                track["jersey_number"] = resolved_jersey
+                continue
+            track["resolved_player_id"] = None
+            track["resolved_player"] = None
+            track["resolved_confidence"] = 0.0
 
         jersey = track.get("best_jersey_guess")
         if not jersey:
@@ -386,7 +399,7 @@ def _enrich_jersey_roster_names(tracks: list[dict[str, Any]], players: list[Any]
             team_matches = [p for p in candidates if p.team_name == team]
             if len(team_matches) == 1:
                 selected = team_matches[0]
-        if selected is None and len(candidates) == 1:
+        if selected is None and not team_probs and len(candidates) == 1:
             selected = candidates[0]
         if selected is None:
             continue
@@ -812,6 +825,11 @@ def _tracks_summary(
         player = player_by_id.get(tracklet.resolved_player_id or "")
         jersey_guess, jersey_score = _best_jersey_for_summary(tracklet, min_jersey_display, peak_threshold, peak_min_count, longer_lock_min_count, idf_weights=idf_weights)
         ranked_cands = _ranked_jersey_candidates(tracklet, min_jersey_display, peak_threshold, peak_min_count, longer_lock_min_count, idf_weights=idf_weights)
+        team_probs = {
+            team: round(float(prob), 4)
+            for team, prob in (evidence.team_probs.items() if evidence else [])
+        }
+        predicted_team = max(team_probs, key=team_probs.get) if team_probs else None
         rows.append(
             {
                 "track_id": tracklet.track_id,
@@ -828,10 +846,9 @@ def _tracks_summary(
                 "jersey_candidates": [(j, round(float(s), 4)) for j, s in ranked_cands[:5]],
                 "jersey_peak_counts": _peak_counts(tracklet, peak_threshold),
                 "role": tracklet.evidence.get("role") if isinstance(tracklet.evidence, dict) else None,
-                "team_probs": {
-                    team: round(float(prob), 4)
-                    for team, prob in (evidence.team_probs.items() if evidence else [])
-                },
+                "predicted_team": predicted_team,
+                "predicted_team_confidence": team_probs.get(predicted_team) if predicted_team else None,
+                "team_probs": team_probs,
             }
         )
     return rows

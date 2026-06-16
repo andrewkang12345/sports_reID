@@ -108,6 +108,7 @@ class TrackObservation:
     appearance_embedding: list[float] | None = None  # real ReID embedding (OSNet/CLIP-ReID)
     crop_quality: float = 0.0
     occlusion_score: float = 0.0
+    role_features: dict[str, float] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -125,6 +126,7 @@ class TrackObservation:
             "appearance_embedding": self.appearance_embedding,
             "crop_quality": float(self.crop_quality),
             "occlusion_score": float(self.occlusion_score),
+            "role_features": self.role_features,
         }
 
 

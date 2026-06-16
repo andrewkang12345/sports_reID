@@ -144,6 +144,32 @@ A synthetic fallback generator remains available for controlled regression testi
 python sample_data/generate_sample_data.py
 ```
 
+## Lacrosse Demo
+
+The repository also includes a lacrosse adaptation for the NLL game Colorado Mammoth
+vs. San Diego Seals on 2019-04-19. The metadata records San Diego 12, Colorado 7,
+with anonymous roster slots because player identity labels are not provided with the
+clip. Referee logic is sport-specific: box-lacrosse officials are treated as
+black-white striped shirts, black shorts, and no helmet; soccer goalkeeper role
+heuristics are disabled for lacrosse.
+
+Prepare a 30-second local clip from the staged source video:
+
+```bash
+python sample_data/prepare_lacrosse_mammoth_seals.py \
+  --source /mnt/data/lacrosse_long_source_iniyaa.mp4
+```
+
+Run and render:
+
+```bash
+python run_demo.py \
+  --video sample_data/lacrosse_mammoth_seals_2019_30s.mp4 \
+  --metadata sample_data/lacrosse_mammoth_seals_2019_metadata.json \
+  --output_dir outputs/lacrosse_mammoth_seals_2019_30s \
+  --config configs/lacrosse_mammoth_seals.yaml
+```
+
 ## Pipeline
 
 The main stages are:

@@ -1,0 +1,100 @@
+video:
+  max_seconds: 30.0
+
+detector:
+  backend: ultralytics
+  weights: yolo11n.pt
+  confidence_threshold: 0.18
+  device: cuda
+  image_size: 640
+  use_tracking: false
+
+pose:
+  enabled: false
+
+legibility:
+  enabled: false
+
+super_resolution:
+  enabled: false
+
+tracker:
+  backend: simple_iou
+  max_age_frames: 18
+  min_iou: 0.02
+  max_center_distance: 170.0
+  iou_weight: 0.55
+  center_weight: 0.45
+
+tracking:
+  min_tracklet_observations: 2
+
+team_classifier:
+  temperature: 0.14
+  unfit_confidence_cap: 0.62
+  unknown_color_distance: 0.52
+
+role_filter:
+  min_player_likelihood: 0.30
+  min_track_duration_sec: 0.12
+  edge_margin_pixels: 4
+  max_edge_touch_ratio: 0.35
+  lower_sideline_y_ratio: 0.985
+  upper_sideline_y_ratio: 0.015
+  side_sideline_x_ratio: 0.005
+  sideline_penalty: 0.45
+  min_observations: 2
+  lacrosse_referee_min_stripe: 0.60
+  lacrosse_referee_min_black_shorts: 0.30
+  lacrosse_referee_max_headgear_score: 0.24
+  lacrosse_referee_min_detection_conf: 0.55
+  lacrosse_referee_min_bbox_height: 65.0
+  lacrosse_referee_side_margin_ratio: 0.12
+  lacrosse_referee_top_lane_ratio: 0.36
+
+jersey_ocr:
+  backend: template
+  run_every_n_frames: 3
+  min_score: 0.15
+  min_margin: 0.030
+  score_temperature: 0.08
+
+headshot_matcher:
+  enabled: false
+
+body_reid:
+  enabled: false
+
+appearance_memory:
+  enabled: false
+
+position_prior:
+  enabled: false
+
+fusion:
+  temperature: 0.9
+  jersey_missing_neutral: 0.72
+  team_missing_neutral: 0.5
+  weights:
+    team: 1.5
+    jersey: 2.0
+    headshot: 0.0
+    body: 0.0
+    position: 0.0
+    track: 0.15
+
+assignment:
+  identity_confidence_threshold: 1.01
+  window_sec: 1.0
+  step_sec: 0.5
+
+visualization:
+  likely_threshold: 1.01
+  max_seconds: 30.0
+  browser_compatible_mp4: true
+  h264_crf: 22
+  min_player_likelihood: 0.30
+  min_track_duration_sec: 0.12
+  min_jersey_display_confidence: 0.42
+  peak_lock_threshold: 0.82
+  peak_lock_min_count: 2

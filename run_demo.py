@@ -107,6 +107,8 @@ def main() -> None:
     jersey_stride = max(1, int(config.get("jersey_ocr", {}).get("run_every_n_frames", 2)))
 
     for frame_index, timestamp, frame in iter_video_frames(args.video, max_seconds=max_seconds):
+        if frame_index and frame_index % 100 == 0:
+            print(f"Processed {frame_index} frames ({timestamp:.1f}s)", flush=True)
         detections = detector.detect(frame, frame_index, timestamp)
         tracked = tracker.update(detections, frame_index, timestamp, frame=frame)
         if pose_model is not None and tracked and frame_index % jersey_stride == 0:
@@ -135,6 +137,7 @@ def main() -> None:
         min_ocr_w = int(ocr_cfg.get("min_ocr_bbox_width", 0))
         for item in tracked:
             crop = crop_xyxy(frame, item.bbox.xyxy, pad=2)
+            role_features = _extract_role_features(crop)
             team_color_rgb, team_quality, shorts_color_rgb, shorts_quality = extract_kit_colors(frame, item.bbox)
             bbox_h = int(item.bbox.y2 - item.bbox.y1)
             bbox_w = int(item.bbox.x2 - item.bbox.x1)
@@ -190,6 +193,7 @@ def main() -> None:
                 appearance_embedding=appearance_embedding,
                 crop_quality=crop_quality(crop),
                 occlusion_score=0.0,
+                role_features=role_features,
             )
 
     tracklets = tracklet_builder.finalize()
@@ -208,6 +212,13 @@ def main() -> None:
         gk_min_hue_dist=int(role_cfg.get("gk_min_hue_dist", 55)),
         min_observations=int(role_cfg.get("min_observations", 5)),
         gk_require_uniform_kit=bool(role_cfg.get("gk_require_uniform_kit", True)),
+        lacrosse_referee_min_stripe=float(role_cfg.get("lacrosse_referee_min_stripe", 0.28)),
+        lacrosse_referee_min_black_shorts=float(role_cfg.get("lacrosse_referee_min_black_shorts", 0.35)),
+        lacrosse_referee_max_headgear_score=float(role_cfg.get("lacrosse_referee_max_headgear_score", 0.24)),
+        lacrosse_referee_min_detection_conf=float(role_cfg.get("lacrosse_referee_min_detection_conf", 0.55)),
+        lacrosse_referee_min_bbox_height=float(role_cfg.get("lacrosse_referee_min_bbox_height", 65.0)),
+        lacrosse_referee_side_margin_ratio=float(role_cfg.get("lacrosse_referee_side_margin_ratio", 0.12)),
+        lacrosse_referee_top_lane_ratio=float(role_cfg.get("lacrosse_referee_top_lane_ratio", 0.36)),
     )
 
     tracks_summary = _tracks_summary(tracklets, players, evidence_by_track, config)
@@ -321,8 +332,15 @@ def main() -> None:
 
     result = {
         "clip_path": str(Path(args.video)),
+        "sport": metadata.get("sport", "soccer"),
+        "competition": metadata.get("competition"),
+        "match_date": metadata.get("match_date"),
+        "match_title": metadata.get("match_title"),
+        "venue": metadata.get("venue"),
         "home_team": metadata.get("home_team"),
         "away_team": metadata.get("away_team"),
+        "final_score": metadata.get("final_score"),
+        "public_source": metadata.get("public_source"),
         "identity_labels_available": metadata.get("identity_labels_available", True),
         "tracks": tracks_summary,
     }
@@ -406,6 +424,13 @@ def _classify_special_roles(
     gk_min_hue_dist: int = 55,
     min_observations: int = 5,
     gk_require_uniform_kit: bool = True,
+    lacrosse_referee_min_stripe: float = 0.28,
+    lacrosse_referee_min_black_shorts: float = 0.35,
+    lacrosse_referee_max_headgear_score: float = 0.24,
+    lacrosse_referee_min_detection_conf: float = 0.55,
+    lacrosse_referee_min_bbox_height: float = 65.0,
+    lacrosse_referee_side_margin_ratio: float = 0.12,
+    lacrosse_referee_top_lane_ratio: float = 0.36,
 ) -> None:
     """Tag tracklets as 'referee' or 'goalkeeper' by HSV hue-distance from both team shirts.
 
@@ -424,6 +449,7 @@ def _classify_special_roles(
     import numpy as np
 
     team_colors = metadata.get("team_colors") or {}
+    sport = str(metadata.get("sport", "soccer")).lower()
     team_shirt_refs: dict[str, np.ndarray] = {}
     for team, refs in team_colors.items():
         if isinstance(refs, dict) and "shirt" in refs:
@@ -471,6 +497,55 @@ def _classify_special_roles(
         # (partial occlusion, bad crop) caused v18's 7-goalkeeper-track inflation.
         if len(tracklet.observations) < min_observations:
             continue
+        if sport == "lacrosse":
+            stripe_scores = [
+                float(obs.role_features.get("black_white_stripe_score", 0.0))
+                for obs in tracklet.observations
+                if obs.role_features
+            ]
+            black_shorts_scores = [
+                float(obs.role_features.get("black_shorts_score", 0.0))
+                for obs in tracklet.observations
+                if obs.role_features
+            ]
+            no_helmet_scores = [
+                float(obs.role_features.get("headgear_score", obs.role_features.get("no_helmet_score", 0.0)))
+                for obs in tracklet.observations
+                if obs.role_features
+            ]
+            det_conf = float(np.median([obs.detection_confidence for obs in tracklet.observations]))
+            median_height = float(np.median([obs.bbox.height for obs in tracklet.observations]))
+            median_cx = float(np.median([obs.bbox.center[0] for obs in tracklet.observations]))
+            median_top = float(np.median([obs.bbox.y1 for obs in tracklet.observations]))
+            near_perimeter = (
+                median_cx <= frame_width * lacrosse_referee_side_margin_ratio
+                or median_cx >= frame_width * (1.0 - lacrosse_referee_side_margin_ratio)
+                or median_top <= frame_height * lacrosse_referee_top_lane_ratio
+            )
+            stripe_score = float(np.median(stripe_scores)) if stripe_scores else 0.0
+            black_shorts_score = float(np.median(black_shorts_scores)) if black_shorts_scores else 0.0
+            no_helmet_score = float(np.median(no_helmet_scores)) if no_helmet_scores else 0.0
+            if (
+                stripe_score >= lacrosse_referee_min_stripe
+                and black_shorts_score >= lacrosse_referee_min_black_shorts
+                and no_helmet_score <= lacrosse_referee_max_headgear_score
+                and det_conf >= lacrosse_referee_min_detection_conf
+                and median_height >= lacrosse_referee_min_bbox_height
+                and near_perimeter
+            ):
+                tracklet.evidence["role"] = "referee"
+                tracklet.evidence["role_referee_stripe_score"] = round(stripe_score, 3)
+                tracklet.evidence["role_black_shorts_score"] = round(black_shorts_score, 3)
+                tracklet.evidence["role_headgear_score"] = round(no_helmet_score, 3)
+                tracklet.evidence["role_detection_confidence"] = round(det_conf, 3)
+                tracklet.evidence["role_perimeter_gate"] = 1.0
+                tracklet.player_likelihood = min(tracklet.player_likelihood, 0.15)
+                tracklet.is_player = False
+                tracklet.evidence["excluded_from_jersey_dedup"] = True
+                n_referees += 1
+            # Box lacrosse has runners/goalies in helmets; do not use soccer goalkeeper
+            # color heuristics, which confuse helmeted players and striped officials.
+            continue
         shirt_med = np.median(np.stack(shirts), axis=0)
         shorts_med = np.median(np.stack(shorts), axis=0) if shorts else None
         min_hue_d, sat = min_hue_dist_to_teams(shirt_med)
@@ -512,6 +587,67 @@ def _classify_special_roles(
             tracklet.evidence["excluded_from_jersey_dedup"] = True
     if n_referees or n_gk:
         print(f"Role classifier: {n_referees} referee track(s), {n_gk} goalkeeper track(s)")
+
+
+def _extract_role_features(crop: Any) -> dict[str, float]:
+    """Frame-local visual cues for role classification.
+
+    For box lacrosse officials, the reliable signature is a black/white vertically
+    striped shirt, black shorts, and no lacrosse helmet. These features are stored per
+    observation and aggregated later at the tracklet level.
+    """
+    import cv2 as _cv2
+    import numpy as _np
+
+    if crop is None or getattr(crop, "size", 0) == 0:
+        return {}
+    h, w = crop.shape[:2]
+    if h < 16 or w < 8:
+        return {}
+
+    def region(y0: float, y1: float, x0: float = 0.10, x1: float = 0.90) -> _np.ndarray:
+        yy0 = max(0, min(h - 1, int(round(h * y0))))
+        yy1 = max(yy0 + 1, min(h, int(round(h * y1))))
+        xx0 = max(0, min(w - 1, int(round(w * x0))))
+        xx1 = max(xx0 + 1, min(w, int(round(w * x1))))
+        return crop[yy0:yy1, xx0:xx1]
+
+    shirt = region(0.18, 0.58, 0.12, 0.88)
+    shorts = region(0.56, 0.86, 0.18, 0.82)
+    head = region(0.00, 0.20, 0.20, 0.80)
+
+    def hsv_parts(img: _np.ndarray) -> tuple[_np.ndarray, _np.ndarray, _np.ndarray]:
+        hsv = _cv2.cvtColor(img, _cv2.COLOR_BGR2HSV)
+        return hsv[:, :, 0], hsv[:, :, 1], hsv[:, :, 2]
+
+    _hue, sat, val = hsv_parts(shirt)
+    black = val < 85
+    white = (val > 145) & (sat < 90)
+    black_frac = float(_np.mean(black))
+    white_frac = float(_np.mean(white))
+    gray = _cv2.cvtColor(shirt, _cv2.COLOR_BGR2GRAY)
+    sobel_x = _cv2.Sobel(gray, _cv2.CV_32F, 1, 0, ksize=3)
+    vertical_edge = float(_np.mean(_np.abs(sobel_x) > 35.0))
+    stripe_balance = min(black_frac, white_frac)
+    stripe_score = max(0.0, min(1.0, 2.2 * stripe_balance + 0.7 * vertical_edge))
+
+    _hue_s, sat_s, val_s = hsv_parts(shorts)
+    black_shorts_score = float(_np.mean((val_s < 90) & (sat_s < 130)))
+
+    _hue_h, sat_h, val_h = hsv_parts(head)
+    skin = (((_hue_h < 25) | (_hue_h > 165)) & (sat_h >= 18) & (sat_h <= 150) & (val_h >= 55))
+    helmet_like = ((val_h > 150) & (sat_h < 90)) | ((val_h < 75) & (sat_h < 150))
+    skin_frac = float(_np.mean(skin))
+    helmet_frac = float(_np.mean(helmet_like))
+    # Far broadcast crops make helmet absence noisy; keep this conservative and let the
+    # strong stripe+shorts signal carry most of the decision.
+    headgear_score = max(0.0, min(1.0, 0.35 + 1.2 * skin_frac - 0.6 * helmet_frac))
+
+    return {
+        "black_white_stripe_score": float(stripe_score),
+        "black_shorts_score": float(black_shorts_score),
+        "headgear_score": float(headgear_score),
+    }
 
 
 def _stamp_team_argmax(tracklets: list[Tracklet], evidence_by_track: dict[str, TrackletEvidence]) -> None:

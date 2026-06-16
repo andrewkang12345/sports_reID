@@ -29,6 +29,7 @@ class TrackletBuilder:
         appearance_embedding: list[float] | None = None,
         crop_quality: float = 0.0,
         occlusion_score: float = 0.0,
+        role_features: dict[str, float] | None = None,
     ) -> None:
         tracklet = self.tracklets.setdefault(track_id, Tracklet(track_id=track_id))
         tracklet.observations.append(
@@ -49,6 +50,7 @@ class TrackletBuilder:
                 appearance_embedding=appearance_embedding,
                 crop_quality=crop_quality,
                 occlusion_score=occlusion_score,
+                role_features=role_features or {},
             )
         )
 

@@ -12,6 +12,10 @@ detector:
   containment_threshold: 0.62
   min_bbox_height: 55
   min_bbox_width: 22
+  require_playing_surface: true
+  min_playing_surface_fraction: 0.16
+  reject_bottom_edge_detections: true
+  bottom_edge_margin_pixels: 3
 
 pose:
   enabled: false

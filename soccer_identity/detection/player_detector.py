@@ -87,6 +87,10 @@ class UltralyticsPlayerDetector(PlayerDetector):
         containment_threshold: float = 0.78,
         min_bbox_height: float = 0.0,
         min_bbox_width: float = 0.0,
+        require_playing_surface: bool = False,
+        min_playing_surface_fraction: float = 0.18,
+        reject_bottom_edge_detections: bool = False,
+        bottom_edge_margin_pixels: float = 2.0,
     ) -> None:
         try:
             from ultralytics import YOLO
@@ -103,6 +107,10 @@ class UltralyticsPlayerDetector(PlayerDetector):
         self.containment_threshold = containment_threshold
         self.min_bbox_height = min_bbox_height
         self.min_bbox_width = min_bbox_width
+        self.require_playing_surface = require_playing_surface
+        self.min_playing_surface_fraction = min_playing_surface_fraction
+        self.reject_bottom_edge_detections = reject_bottom_edge_detections
+        self.bottom_edge_margin_pixels = bottom_edge_margin_pixels
 
     def detect(self, frame: np.ndarray, frame_index: int, timestamp: float) -> list[Detection]:
         predict_kwargs = {
@@ -147,6 +155,12 @@ class UltralyticsPlayerDetector(PlayerDetector):
                 xyxy = box.xyxy[0].detach().cpu().numpy().tolist()
                 bbox = BBox(*map(float, xyxy)).clipped(width, height)
                 if bbox.height < self.min_bbox_height or bbox.width < self.min_bbox_width:
+                    continue
+                if self.reject_bottom_edge_detections and bbox.y2 >= height - self.bottom_edge_margin_pixels:
+                    continue
+                if self.require_playing_surface and not _bbox_has_playing_surface(
+                    frame, bbox, min_fraction=self.min_playing_surface_fraction
+                ):
                     continue
                 track_id = None
                 if getattr(box, "id", None) is not None:
@@ -219,6 +233,40 @@ def _suppress_duplicate_detections(
     return kept
 
 
+def _bbox_has_playing_surface(
+    frame: np.ndarray,
+    bbox: BBox,
+    min_fraction: float = 0.18,
+) -> bool:
+    """Return True when a detection's base sits on the lacrosse floor.
+
+    This filters spectators: a COCO person detector cannot tell players from crowd,
+    but audience boxes usually do not have green turf, purple crease paint, or white
+    floor markings directly under/around their feet.
+    """
+    h, w = frame.shape[:2]
+    bw = max(1.0, bbox.width)
+    bh = max(1.0, bbox.height)
+    x1 = max(0, int(round(bbox.x1 - 0.25 * bw)))
+    x2 = min(w, int(round(bbox.x2 + 0.25 * bw)))
+    y1 = max(0, int(round(bbox.y2 - 0.10 * bh)))
+    y2 = min(h, int(round(bbox.y2 + 0.18 * bh)))
+    if x2 <= x1 or y2 <= y1:
+        return False
+    patch = frame[y1:y2, x1:x2]
+    if patch.size == 0:
+        return False
+    hsv = cv2.cvtColor(patch, cv2.COLOR_BGR2HSV)
+    hue = hsv[:, :, 0]
+    sat = hsv[:, :, 1]
+    val = hsv[:, :, 2]
+    green_floor = (hue >= 34) & (hue <= 96) & (sat >= 32) & (val >= 35)
+    purple_floor = (hue >= 124) & (hue <= 166) & (sat >= 25) & (val >= 45)
+    white_marking = (sat <= 70) & (val >= 150)
+    floor_like = green_floor | purple_floor | white_marking
+    return float(np.mean(floor_like)) >= min_fraction
+
+
 def build_player_detector(config: dict[str, Any]) -> PlayerDetector:
     detector_config = config.get("detector", {})
     backend = str(detector_config.get("backend", "auto")).lower()
@@ -237,6 +285,10 @@ def build_player_detector(config: dict[str, Any]) -> PlayerDetector:
                     containment_threshold=float(detector_config.get("containment_threshold", 0.78)),
                     min_bbox_height=float(detector_config.get("min_bbox_height", 0.0)),
                     min_bbox_width=float(detector_config.get("min_bbox_width", 0.0)),
+                    require_playing_surface=bool(detector_config.get("require_playing_surface", False)),
+                    min_playing_surface_fraction=float(detector_config.get("min_playing_surface_fraction", 0.18)),
+                    reject_bottom_edge_detections=bool(detector_config.get("reject_bottom_edge_detections", False)),
+                    bottom_edge_margin_pixels=float(detector_config.get("bottom_edge_margin_pixels", 2.0)),
                 )
             except Exception:
                 if backend != "auto":

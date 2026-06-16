@@ -328,6 +328,7 @@ def main() -> None:
                   f"({stats['stitched_pairs']} edges among {stats['total_eligible_tracks']} eligible)")
         # One final conflict pass to clean up any newly created simultaneous identities
         _resolve_identity_conflicts(tracks_summary, tracklets, players, metadata, identity_threshold, likely_threshold)
+    _enrich_jersey_roster_names(tracks_summary, players)
     print(f"Player tracks: {sum(1 for t in tracks_summary if t['is_player'])} of {len(tracks_summary)}")
 
     result = {
@@ -353,6 +354,48 @@ def main() -> None:
     renderer.render(args.video, output_dir / "visualization.mp4", tracklets, jersey_by_track_id)
     print(f"Wrote {output_dir / 'result.json'}")
     print(f"Wrote {output_dir / 'visualization.mp4'}")
+
+
+def _enrich_jersey_roster_names(tracks: list[dict[str, Any]], players: list[Any]) -> None:
+    players_by_jersey: dict[str, list[Any]] = {}
+    for player in players:
+        if player.jersey_number is None:
+            continue
+        players_by_jersey.setdefault(str(player.jersey_number), []).append(player)
+
+    for track in tracks:
+        if not track.get("is_player") or track.get("role") in {"referee", "goalkeeper"}:
+            continue
+        resolved = track.get("resolved_player")
+        if isinstance(resolved, dict) and resolved.get("player_name"):
+            track["player_name"] = resolved["player_name"]
+            track["jersey_number"] = resolved.get("jersey_number")
+            continue
+
+        jersey = track.get("best_jersey_guess")
+        if not jersey:
+            continue
+        candidates = players_by_jersey.get(str(jersey), [])
+        if not candidates:
+            continue
+
+        selected = None
+        team_probs = track.get("team_probs") or {}
+        if team_probs:
+            team = max(team_probs, key=team_probs.get)
+            team_matches = [p for p in candidates if p.team_name == team]
+            if len(team_matches) == 1:
+                selected = team_matches[0]
+        if selected is None and len(candidates) == 1:
+            selected = candidates[0]
+        if selected is None:
+            continue
+
+        track["resolved_player_id"] = selected.player_id
+        track["resolved_player"] = selected.to_dict()
+        track["player_name"] = selected.player_name
+        track["jersey_number"] = selected.jersey_number
+        track["identity_source"] = "jersey_roster_lookup"
 
 
 def _mark_player_likelihood(
